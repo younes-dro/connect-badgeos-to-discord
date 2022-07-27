@@ -44,13 +44,13 @@ class Connect_Badgeos_To_Discord_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of this plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -98,6 +98,30 @@ class Connect_Badgeos_To_Discord_Admin {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-badgeos-to-discord-admin.js', array( 'jquery' ), $this->version, false );
 
+	}
+
+	/**
+	 * Method to add discord setting sub-menu under top level menu of BadgeOS
+	 *
+	 * @since    1.0.0
+	 */
+	public function ets_badgeos_discord_add_settings_menu() {
+		add_submenu_page( 'badgeos_badgeos', __( 'Discord Settings', 'connect-badgeos-to-discord' ), __( 'Discord Settings', 'connect-badgeos-to-discord' ), 'manage_options', 'connect-badgeos-to-discord', array( $this, 'ets_badgeos_discord_setting_page' ) );
+	}
+
+	/**
+	 * Callback to Display settings page
+	 *
+	 * @since    1.0.0
+	 */
+	public function ets_badgeos_discord_setting_page() {
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+		wp_enqueue_style( $this->plugin_name );
+		wp_enqueue_script( $this->plugin_name );
+		require_once CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/connect-badgeos-to-discord-admin-display.php';
 	}
 
 }
