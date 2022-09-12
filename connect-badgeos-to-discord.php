@@ -53,6 +53,11 @@ define( 'CONNECT_BADGEOS_TO_DISCORD_OAUTH_SCOPES', 'identify email guilds guilds
 define( 'CONNECT_BADGEOS_TO_DISCORD_API_URL', 'https://discord.com/api/v10/' );
 
 /**
+ * Define group name for action scheduler actions
+ */
+define( 'BADGEOS_DISCORD_AS_GROUP_NAME', 'ets-badgeos-discord' );
+
+/**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-connect-badgeos-to-discord-activator.php
  */
