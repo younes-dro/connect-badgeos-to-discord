@@ -14,21 +14,13 @@ $ets_badgeos_discord_redirect_page_id   = sanitize_text_field( trim( get_option(
 	<?php wp_nonce_field( 'save_badgeos_discord_general_settings', 'ets_badgeos_discord_save_settings' ); ?>
   <div class="ets-input-group">
 	<label><?php esc_html_e( 'Client ID', 'connect-badgeos-to-discord' ); ?> :</label>
-	<input type="text" class="ets-input" name="ets_badgeos_discord_client_id" value="
-	<?php
-	if ( isset( $ets_badgeos_discord_client_id ) ) {
-		echo esc_attr( $ets_badgeos_discord_client_id ); }
-	?>
-	" required placeholder="Discord Client ID">
+	<?php $ets_badgeos_discord_client_id_value = ( isset( $ets_badgeos_discord_client_id ) ) ? $ets_badgeos_discord_client_id : ''; ?>
+	<input type="text" class="ets-input" name="ets_badgeos_discord_client_id" value="<?php echo esc_attr( $ets_badgeos_discord_client_id_value ); ?>" required placeholder="Discord Client ID">
   </div>
 	<div class="ets-input-group">
 	  <label><?php esc_html_e( 'Client Secret', 'connect-badgeos-to-discord' ); ?> :</label>
-		<input type="text" class="ets-input" name="ets_badgeos_discord_client_secret" value="
-		<?php
-		if ( isset( $ets_badgeos_discord_client_secret ) ) {
-			echo esc_attr( $ets_badgeos_discord_client_secret ); }
-		?>
-	" required placeholder="Discord Client Secret">
+	  <?php $ets_badgeos_discord_client_secret_value = ( isset( $ets_badgeos_discord_client_secret ) ) ? $ets_badgeos_discord_client_secret : ''; ?>
+		<input type="text" class="ets-input" name="ets_badgeos_discord_client_secret" value="<?php echo esc_attr( $ets_badgeos_discord_client_secret_value ); ?>" required placeholder="Discord Client Secret">
 	</div>
 	<div class="ets-input-group">
 	<label><?php esc_html_e( 'Redirect URL', 'connect-badgeos-to-discord' ); ?> :</label>
@@ -67,22 +59,14 @@ $ets_badgeos_discord_redirect_page_id   = sanitize_text_field( trim( get_option(
 			?>
 						
 	  <label><?php esc_html_e( 'Bot Token', 'connect-badgeos-to-discord' ); ?> :</label>
-		  <input type="password" class="ets-input" name="ets_badgeos_discord_bot_token" value="
-		  <?php
-			if ( isset( $ets_badgeos_discord_bot_token ) ) {
-				echo esc_attr( $ets_badgeos_discord_bot_token ); }
-			?>
-		" required placeholder="Discord Bot Token">
+	  <?php $ets_badgeos_discord_bot_token_value = isset( $ets_badgeos_discord_bot_token ) ? $ets_badgeos_discord_bot_token : ''; ?>
+		  <input type="password" class="ets-input" name="ets_badgeos_discord_bot_token" value="<?php echo esc_attr( $ets_badgeos_discord_bot_token_value ); ?>" required placeholder="Discord Bot Token">
 	</div>
 	<div class="ets-input-group">
 	  <label><?php esc_html_e( 'Server ID', 'connect-badgeos-to-discord' ); ?> :</label>
+	  <?php $ets_badgeos_discord_server_id_value = ( isset( $ets_badgeos_discord_server_id ) ) ? $ets_badgeos_discord_server_id : ''; ?>
 		<input type="text" class="ets-input" name="ets_badgeos_discord_server_id"
-		placeholder="Discord Server Id" value="
-		<?php
-		if ( isset( $ets_badgeos_discord_server_id ) ) {
-			echo esc_attr( $ets_badgeos_discord_server_id ); }
-		?>
-		" required>
+		placeholder="Discord Server Id" value="<?php echo esc_attr( $ets_badgeos_discord_server_id_value ); ?>" required>
 	</div>
 	<?php if ( empty( $ets_badgeos_discord_client_id ) || empty( $ets_badgeos_discord_client_secret ) || empty( $ets_badgeos_discord_bot_token ) || empty( $ets_badgeos_discord_redirect_url ) || empty( $ets_badgeos_discord_server_id ) ) { ?>
 	  <p class="ets-danger-text description">
