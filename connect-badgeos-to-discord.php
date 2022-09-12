@@ -41,6 +41,12 @@ define( 'CONNECT_BADGEOS_TO_DISCORD_VERSION', '1.0.0' );
  * Define plugin directory path
  */
 define( 'CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Discord API call scopes
+ */
+define( 'CONNECT_BADGEOS_TO_DISCORD_OAUTH_SCOPES', 'identify email guilds guilds.join' );
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-connect-badgeos-to-discord-activator.php

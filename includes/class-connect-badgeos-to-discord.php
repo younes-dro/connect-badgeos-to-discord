@@ -100,6 +100,18 @@ class Connect_Badgeos_To_Discord {
 	private function load_dependencies() {
 
 		/**
+		 * The class responsible for Logs
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-connect-badgeos-to-discord-logs.php';
+
+		/**
+		 * Common functions file.
+		 * core plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/functions.php';
+
+		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
