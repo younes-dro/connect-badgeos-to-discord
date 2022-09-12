@@ -1,6 +1,7 @@
 <?php
 
-$ets_badgeos_ranks = ets_badgeos_discord_get_ranks();
+$ets_badgeos_ranks = badgeos_get_ranks();
+
 
 $connect_badgeos_default_role = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_default_role_id' ) ) );
 ?>
@@ -24,11 +25,11 @@ $connect_badgeos_default_role = sanitize_text_field( trim( get_option( 'ets_badg
 	<hr>
 	<div class="badgeos-discord-rank-type">
 	<?php
-	if ( $ets_badgeos_ranks ) {
-		foreach ( $ets_badgeos_ranks as $ets_badgeos_rank_id => $ets_badgeos_rank_title ) {
+	if ( is_array( $ets_badgeos_ranks ) ) {
+		foreach ( $ets_badgeos_ranks as $ets_badgeos_rank ) {
 
 			?>
-		  <div class="makeMeDroppable" data-badgeos_rank_type_id="<?php echo esc_attr( $ets_badgeos_rank_id ); ?>" ><span><?php echo esc_html( $ets_badgeos_rank_title ); ?></span></div>
+		  <div class="makeMeDroppable" data-badgeos_rank_type_id="<?php echo esc_attr( $ets_badgeos_rank->ID ); ?>" ><span><?php echo esc_html( $ets_badgeos_rank->post_title ); ?></span></div>
 			<?php
 
 		}

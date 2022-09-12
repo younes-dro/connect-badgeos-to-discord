@@ -12,7 +12,7 @@
 					data: { 'action': 'ets_badgeos_discord_update_redirect_url', 'ets_badgeos_page_id': $(this).val() , 'ets_badgeos_discord_nonce': etsBadgeOSParams.ets_badgeos_discord_nonce },
 					beforeSend: function () {
 						$('p.redirect-url').find('b').html("");
-                                                $('p.ets-discord-update-message').css('display','none');                                               
+                        $('p.ets-discord-update-message').css('display','none');                                               
 						$(this).siblings('p.description').find('span.spinner').addClass("ets-is-active").show();
 					},
 					success: function (data) {

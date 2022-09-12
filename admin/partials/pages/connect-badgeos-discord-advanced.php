@@ -18,6 +18,19 @@ $set_job_cnrc         = sanitize_text_field( trim( get_option( 'ets_badgeos_disc
 $set_job_q_batch_size = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_job_queue_batch_size' ) ) );
 $log_api_res          = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_log_api_response' ) ) );
 
+echo '<pre>';
+
+$ranks = badgeos_get_ranks();
+
+ var_dump( $ranks );
+
+foreach ( $ranks as $rank ) {
+
+	echo $rank->post_title;
+	echo '<br>';
+}
+echo '</pre>';
+
 ?>
 <form method="post" action="<?php echo esc_url( get_site_url() . '/wp-admin/admin-post.php' ); ?>">
  <input type="hidden" name="action" value="badgeos_discord_save_advance_settings">

@@ -282,4 +282,40 @@ class Connect_Badgeos_To_Discord_Admin {
 
 	}
 
+	/**
+	 * Save Role mapping settings
+	 *
+	 * @param NONE
+	 * @return NONE
+	 */
+	public function ets_badgeos_discord_save_role_mapping() {
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+		$ets_discord_roles = isset( $_POST['ets_badgeos_discord_role_mapping'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_role_mapping'] ) ) : '';
+
+		$ets_badgeos_discord_default_role_id = isset( $_POST['badgeos_defaultRole'] ) ? sanitize_textarea_field( trim( $_POST['badgeos_defaultRole'] ) ) : '';
+		$ets_discord_roles                   = stripslashes( $ets_discord_roles );
+		$save_mapping_status                 = update_option( 'ets_badgeos_discord_role_mapping', $ets_discord_roles );
+		$ets_current_url                     = sanitize_text_field( trim( $_POST['current_url'] ) );
+		if ( isset( $_POST['ets_badgeos_discord_role_mappings_nonce'] ) && wp_verify_nonce( $_POST['ets_badgeos_discord_role_mappings_nonce'], 'badgeos_discord_role_mappings_nonce' ) ) {
+			if ( ( $save_mapping_status || isset( $_POST['ets_badgeos_discord_role_mapping'] ) ) && ! isset( $_POST['flush'] ) ) {
+				if ( $ets_badgeos_discord_default_role_id ) {
+					update_option( 'ets_badgeos_discord_default_role_id', $ets_badgeos_discord_default_role_id );
+				}
+
+				$message = esc_html__( 'Your mappings are saved successfully.', 'connect-badgeos-to-discord' );
+			}
+			if ( isset( $_POST['flush'] ) ) {
+				delete_option( 'ets_badgeos_discord_role_mapping' );
+				delete_option( 'ets_badgeos_discord_default_role_id' );
+
+				$message = 'Your settings flushed successfully.';
+			}
+			$pre_location = $ets_current_url . '&save_settings_msg=' . $message . '#ets_badgeos_discord_role_mapping';
+			wp_safe_redirect( $pre_location );
+		}
+	}
+
 }
