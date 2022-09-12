@@ -311,7 +311,7 @@ class Connect_Badgeos_To_Discord_Admin {
 				delete_option( 'ets_badgeos_discord_role_mapping' );
 				delete_option( 'ets_badgeos_discord_default_role_id' );
 
-				$message = 'Your settings flushed successfully.';
+				$message = esc_html__( 'Your settings flushed successfully.', 'connect-badgeos-to-discord' );
 			}
 			$pre_location = $ets_current_url . '&save_settings_msg=' . $message . '#ets_badgeos_discord_role_mapping';
 			wp_safe_redirect( $pre_location );
@@ -348,6 +348,126 @@ class Connect_Badgeos_To_Discord_Admin {
 
 		}
 		exit();
+
+	}
+
+	/**
+	 * Save advanced settings
+	 *
+	 * @param NONE
+	 * @return NONE
+	 */
+	public function ets_badgeos_discord_save_advance_settings() {
+
+		if ( ! current_user_can( 'administrator' ) || ! wp_verify_nonce( $_POST['ets_badgeos_discord_advance_settings_nonce'], 'badgeos_discord_advance_settings_nonce' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+
+			$ets_badgeos_discord_send_welcome_dm            = isset( $_POST['ets_badgeos_discord_send_welcome_dm'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_send_welcome_dm'] ) ) : '';
+			$ets_badgeos_discord_welcome_message            = isset( $_POST['ets_badgeos_discord_welcome_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_welcome_message'] ) ) : '';
+			$ets_badgeos_discord_award_rank_message         = isset( $_POST['ets_badgeos_discord_award_rank_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_award_rank_message'] ) ) : '';
+			$ets_badgeos_discord_award_user_points_message  = isset( $_POST['ets_badgeos_discord_award_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_award_user_points_message'] ) ) : '';
+			$ets_badgeos_discord_deduct_user_points_message = isset( $_POST['ets_badgeos_discord_deduct_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_deduct_user_points_message'] ) ) : '';
+
+			$retry_failed_api     = isset( $_POST['retry_failed_api'] ) ? sanitize_textarea_field( trim( $_POST['retry_failed_api'] ) ) : '';
+			$kick_upon_disconnect = isset( $_POST['kick_upon_disconnect'] ) ? sanitize_textarea_field( trim( $_POST['kick_upon_disconnect'] ) ) : '';
+			$retry_api_count      = isset( $_POST['ets_badgeos_retry_api_count'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_retry_api_count'] ) ) : '';
+			$set_job_cnrc         = isset( $_POST['set_job_cnrc'] ) ? sanitize_textarea_field( trim( $_POST['set_job_cnrc'] ) ) : '';
+			$set_job_q_batch_size = isset( $_POST['set_job_q_batch_size'] ) ? sanitize_textarea_field( trim( $_POST['set_job_q_batch_size'] ) ) : '';
+			$log_api_res          = isset( $_POST['log_api_res'] ) ? sanitize_textarea_field( trim( $_POST['log_api_res'] ) ) : '';
+			$ets_current_url      = sanitize_text_field( trim( $_POST['current_url'] ) );
+
+		if ( isset( $_POST['ets_badgeos_discord_advance_settings_nonce'] ) && wp_verify_nonce( $_POST['ets_badgeos_discord_advance_settings_nonce'], 'badgeos_discord_advance_settings_nonce' ) ) {
+			if ( isset( $_POST['adv_submit'] ) ) {
+
+				if ( isset( $_POST['ets_badgeos_discord_send_welcome_dm'] ) ) {
+					update_option( 'ets_badgeos_discord_send_welcome_dm', true );
+				} else {
+					update_option( 'ets_badgeos_discord_send_welcome_dm', false );
+				}
+				if ( isset( $_POST['ets_badgeos_discord_welcome_message'] ) && $_POST['ets_badgeos_discord_welcome_message'] != '' ) {
+					update_option( 'ets_badgeos_discord_welcome_message', $ets_badgeos_discord_welcome_message );
+				} else {
+					update_option( 'ets_badgeos_discord_welcome_message', '' );
+				}
+
+				if ( isset( $_POST['ets_badgeos_discord_send_award_rank_dm'] ) ) {
+					update_option( 'ets_badgeos_discord_send_award_rank_dm', true );
+				} else {
+					update_option( 'ets_badgeos_discord_send_award_rank_dm', false );
+				}
+				if ( isset( $_POST['ets_badgeos_discord_award_rank_message'] ) && $_POST['ets_badgeos_discord_award_rank_message'] != '' ) {
+					update_option( 'ets_badgeos_discord_award_rank_message', $ets_badgeos_discord_award_rank_message );
+				} else {
+					update_option( 'ets_badgeos_discord_award_rank_message', '' );
+				}
+
+				if ( isset( $_POST['ets_badgeos_discord_send_award_user_points_dm'] ) ) {
+					update_option( 'ets_badgeos_discord_send_award_user_points_dm', true );
+				} else {
+					update_option( 'ets_badgeos_discord_send_award_user_points_dm', false );
+				}
+				if ( isset( $_POST['ets_badgeos_discord_award_user_points_message'] ) && $_POST['ets_badgeos_discord_award_user_points_message'] != '' ) {
+					update_option( 'ets_badgeos_discord_award_user_points_message', $ets_badgeos_discord_award_user_points_message );
+				} else {
+					update_option( 'ets_badgeos_discord_award_user_points_message', '' );
+				}
+
+				if ( isset( $_POST['ets_badgeos_discord_send_deduct_user_points_dm'] ) ) {
+					update_option( 'ets_badgeos_discord_send_deduct_user_points_dm', true );
+				} else {
+					update_option( 'ets_badgeos_discord_send_deduct_user_points_dm', false );
+				}
+				if ( isset( $_POST['ets_badgeos_discord_deduct_user_points_message'] ) && $_POST['ets_badgeos_discord_deduct_user_points_message'] != '' ) {
+					update_option( 'ets_badgeos_discord_deduct_user_points_message', $ets_badgeos_discord_deduct_user_points_message );
+				} else {
+					update_option( 'ets_badgeos_discord_deduct_user_points_message', '' );
+				}
+
+				if ( isset( $_POST['retry_failed_api'] ) ) {
+					update_option( 'ets_badgeos_discord_retry_failed_api', true );
+				} else {
+					update_option( 'ets_badgeos_discord_retry_failed_api', false );
+				}
+				if ( isset( $_POST['kick_upon_disconnect'] ) ) {
+					update_option( 'ets_badgeos_discord_kick_upon_disconnect', true );
+				} else {
+					update_option( 'ets_badgeos_discord_kick_upon_disconnect', false );
+				}
+				if ( isset( $_POST['ets_badgeos_retry_api_count'] ) ) {
+					if ( $retry_api_count < 1 ) {
+						update_option( 'ets_badgeos_discord_retry_api_count', 1 );
+					} else {
+						update_option( 'ets_badgeos_discord_retry_api_count', $retry_api_count );
+					}
+				}
+				if ( isset( $_POST['set_job_cnrc'] ) ) {
+					if ( $set_job_cnrc < 1 ) {
+						update_option( 'ets_badgeos_discord_job_queue_concurrency', 1 );
+					} else {
+						update_option( 'ets_badgeos_discord_job_queue_concurrency', $set_job_cnrc );
+					}
+				}
+				if ( isset( $_POST['set_job_q_batch_size'] ) ) {
+					if ( $set_job_q_batch_size < 1 ) {
+						update_option( 'ets_badgeos_discord_job_queue_batch_size', 1 );
+					} else {
+						update_option( 'ets_badgeos_discord_job_queue_batch_size', $set_job_q_batch_size );
+					}
+				}
+				if ( isset( $_POST['log_api_res'] ) ) {
+					update_option( 'ets_badgeos_discord_log_api_response', true );
+				} else {
+					update_option( 'ets_badgeos_discord_log_api_response', false );
+				}
+
+				$message      = esc_html__( 'Your settings flushed successfully.', 'connect-badgeos-to-discord' );
+				$pre_location = $ets_current_url . '&save_settings_msg=' . esc_html( $message ) . '#ets_badgeos_discord_advanced';
+				wp_safe_redirect( $pre_location );
+
+			}
+		}
 
 	}
 
