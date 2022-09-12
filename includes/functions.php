@@ -89,3 +89,39 @@ function ets_get_badgeos_discord_formated_discord_redirect_url( $page_id ) {
 		}
 	}
 }
+
+ /*
+ * Get BOT name
+ *
+ * @param NONE
+ * @return NONE
+ */
+function ets_badgeos_discord_update_bot_name_option() {
+
+	$guild_id          = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_server_id' ) ) );
+	$discord_bot_token = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_bot_token' ) ) );
+	if ( $guild_id && $discord_bot_token ) {
+
+				$discod_current_user_api = CONNECT_BADGEOS_TO_DISCORD_API_URL . 'users/@me';
+
+		$app_args = array(
+			'method'  => 'GET',
+			'headers' => array(
+				'Content-Type'  => 'application/json',
+				'Authorization' => 'Bot ' . $discord_bot_token,
+			),
+		);
+
+		$app_response = wp_remote_post( $discod_current_user_api, $app_args );
+
+		$response_arr = json_decode( wp_remote_retrieve_body( $app_response ), true );
+
+		if ( is_array( $response_arr ) && array_key_exists( 'username', $response_arr ) ) {
+
+			update_option( 'ets_badgeos_discord_connected_bot_name', $response_arr ['username'] );
+		} else {
+			delete_option( 'ets_badgeos_discord_connected_bot_name' );
+		}
+	}
+
+}
