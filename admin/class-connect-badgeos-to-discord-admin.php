@@ -471,4 +471,50 @@ class Connect_Badgeos_To_Discord_Admin {
 
 	}
 
+	/**
+	 * Save apearance settings
+	 *
+	 * @param NONE
+	 * @return NONE
+	 */
+	public function ets_badgeos_discord_save_appearance_settings() {
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+
+		$ets_badgeos_discord_connect_button_bg_color    = isset( $_POST['ets_badgeos_discord_connect_button_bg_color'] ) && $_POST['ets_badgeos_discord_connect_button_bg_color'] !== '' ? sanitize_text_field( trim( $_POST['ets_badgeos_discord_connect_button_bg_color'] ) ) : '#77a02e';
+		$ets_badgeos_discord_disconnect_button_bg_color = isset( $_POST['ets_badgeos_discord_disconnect_button_bg_color'] ) && $_POST['ets_badgeos_discord_disconnect_button_bg_color'] != '' ? sanitize_text_field( trim( $_POST['ets_badgeos_discord_disconnect_button_bg_color'] ) ) : '#ff0000';
+		$ets_badgeos_loggedin_btn_text                  = isset( $_POST['ets_badgeos_loggedin_btn_text'] ) && $_POST['ets_badgeos_loggedin_btn_text'] != '' ? sanitize_text_field( trim( $_POST['ets_badgeos_loggedin_btn_text'] ) ) : 'Connect To Discord';
+		$ets_badgeos_loggedout_btn_text                 = isset( $_POST['ets_badgeos_loggedout_btn_text'] ) && $_POST['ets_badgeos_loggedout_btn_text'] != '' ? sanitize_text_field( trim( $_POST['ets_badgeos_loggedout_btn_text'] ) ) : 'Login With Discord';
+		$ets_badgeos_discord_disconnect_btn_text        = $_POST['ets_badgeos_discord_disconnect_btn_text'] ? sanitize_text_field( trim( $_POST['ets_badgeos_discord_disconnect_btn_text'] ) ) : 'Disconnect From Discord';
+
+		if ( isset( $_POST['appearance_submit'] ) ) {
+
+			if ( isset( $_POST['ets_badgeos_discord_save_appearance_settings'] ) && wp_verify_nonce( $_POST['ets_badgeos_discord_save_appearance_settings'], 'save_ets_badgeos_discord_appearance_settings' ) ) {
+				if ( $ets_badgeos_discord_connect_button_bg_color ) {
+					update_option( 'ets_badgeos_discord_connect_button_bg_color', $ets_badgeos_discord_connect_button_bg_color );
+				}
+				if ( $ets_badgeos_discord_disconnect_button_bg_color ) {
+					update_option( 'ets_badgeos_discord_disconnect_button_bg_color', $ets_badgeos_discord_disconnect_button_bg_color );
+				}
+				if ( $ets_badgeos_loggedout_btn_text ) {
+					update_option( 'ets_badgeos_discord_non_login_button_text', $ets_badgeos_loggedout_btn_text );
+				}
+				if ( $ets_badgeos_loggedin_btn_text ) {
+					update_option( 'ets_badgeos_discord_loggedin_button_text', $ets_badgeos_loggedin_btn_text );
+				}
+				if ( $ets_badgeos_discord_disconnect_btn_text ) {
+					update_option( 'ets_badgeos_discord_disconnect_button_text', $ets_badgeos_discord_disconnect_btn_text );
+				}
+				$message = esc_html__( 'Your settings flushed successfully.', 'connect-badgeos-to-discord' );
+				if ( isset( $_POST['current_url'] ) ) {
+					$pre_location = sanitize_text_field( $_POST['current_url'] ) . '&save_settings_msg=' . $message . '#ets_badgeos_discord_appearance';
+					wp_safe_redirect( $pre_location );
+				}
+			}
+		}
+
+	}
+
 }

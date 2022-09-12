@@ -1,7 +1,7 @@
 <?php
 $ets_badgeos_discord_connect_button_bg_color    = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_connect_button_bg_color' ) ) );
 $ets_badgeos_discord_disconnect_button_bg_color = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_disconnect_button_bg_color' ) ) );
-$btn_text                                       = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_loggedout_btn_text' ) ) );
+$btn_text                                       = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_non_login_button_text' ) ) );
 $loggedin_btn_text                              = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_loggedin_button_text' ) ) );
 $ets_badgeos_discord_disconnect_btn_text        = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_disconnect_button_text' ) ) );
 $ets_current_screen                             = ets_badgeos_discord_get_current_screen_url();
