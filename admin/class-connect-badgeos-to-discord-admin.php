@@ -211,4 +211,75 @@ class Connect_Badgeos_To_Discord_Admin {
 		}
 	}
 
+	/**
+	 * Load discord roles from server
+	 *
+	 * @return OBJECT REST API response
+	 */
+	public function ets_badgeos_discord_load_discord_roles() {
+
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+		// Check for nonce security
+		if ( ! wp_verify_nonce( $_POST['ets_badgeos_discord_nonce'], 'ets-badgeos-discord-ajax-nonce' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+		$user_id = get_current_user_id();
+
+		$guild_id          = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_server_id' ) ) );
+		$discord_bot_token = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_bot_token' ) ) );
+		$client_id         = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_client_id' ) ) );
+		if ( $guild_id && $discord_bot_token ) {
+			$discod_server_roles_api = CONNECT_BADGEOS_TO_DISCORD_API_URL . 'guilds/' . $guild_id . '/roles';
+			$guild_args              = array(
+				'method'  => 'GET',
+				'headers' => array(
+					'Content-Type'  => 'application/json',
+					'Authorization' => 'Bot ' . $discord_bot_token,
+				),
+			);
+			$guild_response          = wp_remote_post( $discod_server_roles_api, $guild_args );
+
+			// ets_badgeos_discord_log_api_response( $user_id, $discod_server_roles_api, $guild_args, $guild_response );
+
+			$response_arr = json_decode( wp_remote_retrieve_body( $guild_response ), true );
+
+			if ( is_array( $response_arr ) && ! empty( $response_arr ) ) {
+				if ( array_key_exists( 'code', $response_arr ) || array_key_exists( 'error', $response_arr ) ) {
+					// Connect_badgeos_Discord_Add_On_Logs::write_api_response_logs( $response_arr, $user_id, debug_backtrace()[0] );
+				} else {
+					$response_arr['previous_mapping'] = get_option( 'ets_badgeos_discord_role_mapping' );
+
+					$discord_roles = array();
+					foreach ( $response_arr as $key => $value ) {
+						$isbot = false;
+						if ( is_array( $value ) ) {
+							if ( array_key_exists( 'tags', $value ) ) {
+								if ( array_key_exists( 'bot_id', $value['tags'] ) ) {
+									$isbot = true;
+									if ( $value['tags']['bot_id'] === $client_id ) {
+										$response_arr['bot_connected'] = 'yes';
+									}
+								}
+							}
+						}
+						if ( $key != 'previous_mapping' && $isbot == false && isset( $value['name'] ) && $value['name'] != '@everyone' ) {
+							$discord_roles[ $value['id'] ]       = $value['name'];
+							$discord_roles_color[ $value['id'] ] = $value['color'];
+						}
+					}
+					update_option( 'ets_badgeos_discord_all_roles', serialize( $discord_roles ) );
+					update_option( 'ets_badgeos_discord_roles_color', serialize( $discord_roles_color ) );
+				}
+			}
+				return wp_send_json( $response_arr );
+		}
+
+				exit();
+
+	}
+
 }

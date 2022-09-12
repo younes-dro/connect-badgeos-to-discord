@@ -170,6 +170,7 @@ class Connect_Badgeos_To_Discord {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'ets_badgeos_discord_add_settings_menu' );
 		$this->loader->add_action( 'admin_post_badgeos_discord_application_settings', $plugin_admin, 'ets_badgeos_discord_application_settings' );
+		$this->loader->add_action( 'wp_ajax_ets_badgeos_discord_load_discord_roles', $plugin_admin, 'ets_badgeos_discord_load_discord_roles' );
 
 	}
 
