@@ -126,4 +126,88 @@ class Connect_Badgeos_To_Discord_Public {
 
 	}
 
+	/**
+	 * Add button to make connection in between user and discord
+	 *
+	 * @param NONE
+	 * @return STRING
+	 */
+	public function ets_badgeos_discord_add_connect_discord_button() {
+		$user_id = sanitize_text_field( trim( get_current_user_id() ) );
+
+		$access_token                                   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		$_ets_badgeos_discord_username                  = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_username', true ) ) );
+		$ets_badgeos_discord_connect_button_bg_color    = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_connect_button_bg_color' ) ) );
+		$ets_badgeos_discord_disconnect_button_bg_color = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_disconnect_button_bg_color' ) ) );
+		$ets_badgeos_discord_disconnect_button_text     = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_disconnect_button_text' ) ) );
+		$ets_badgeos_discord_loggedin_button_text       = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_loggedin_button_text' ) ) );
+		$default_role                                   = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_default_role_id' ) ) );
+		$ets_badgeos_discord_role_mapping               = json_decode( get_option( 'ets_badgeos_discord_role_mapping' ), true );
+		$all_roles                                      = unserialize( get_option( 'ets_badgeos_discord_all_roles' ) );
+		$roles_color                                    = unserialize( get_option( 'ets_badgeos_discord_roles_color' ) );
+		$user_ranks                                     = ets_badgeos_discord_get_user_ranks_ids( $user_id );
+		$mapped_role_name                               = '';
+		if ( is_array( $user_ranks ) && is_array( $all_roles ) && is_array( $ets_badgeos_discord_role_mapping ) ) {
+			foreach ( $user_ranks as $key => $user_rank_id ) {
+				if ( array_key_exists( 'badgeos_rank_type_id_' . $user_rank_id, $ets_badgeos_discord_role_mapping ) ) {
+
+					$mapped_role_id = $ets_badgeos_discord_role_mapping[ 'badgeos_rank_type_id_' . $user_rank_id ];
+
+					if ( array_key_exists( $mapped_role_id, $all_roles ) ) {
+						$mapped_role_name .= '<span> <i style="background-color:#' . dechex( $roles_color[ $mapped_role_id ] ) . '"></i>' . $all_roles[ $mapped_role_id ] . '</span>';
+					}
+				}
+			}
+		}
+
+		$default_role_name = '';
+		if ( is_array( $all_roles ) ) {
+			if ( $default_role != 'none' && array_key_exists( $default_role, $all_roles ) ) {
+				$default_role_name = '<span><i style="background-color:#' . dechex( $roles_color[ $default_role ] ) . '"></i> ' . $all_roles[ $default_role ] . '</span>';
+			}
+		}
+
+			$restrictcontent_discord = '';
+		if ( badgeos_discord_check_saved_settings_status() ) {
+
+			if ( $access_token ) {
+				$discord_user_id     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_user_id', true ) ) );
+				$discord_user_avatar = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_avatar', true ) ) );
+
+				$disconnect_btn_bg_color  = 'style="background-color:' . $ets_badgeos_discord_disconnect_button_bg_color . '"';
+				$restrictcontent_discord .= '<div>';
+				$restrictcontent_discord .= '<div>';
+				$restrictcontent_discord .= '<h2>' . esc_html__( 'Discord connection', 'connect-badgeos-and-discord' ) . '</h2>';
+				$restrictcontent_discord .= '</div>';
+				$restrictcontent_discord .= '<div>';
+				$restrictcontent_discord .= '<a href="#" class="ets-btn badgeos-discord-btn-disconnect" ' . $disconnect_btn_bg_color . ' id="badgeos-discord-disconnect-discord" data-user-id="' . esc_attr( $user_id ) . '">' . esc_html( $ets_badgeos_discord_disconnect_button_text ) . Connect_badgeos_Discord_Addon::get_discord_logo_white() . '</a>';
+				$restrictcontent_discord .= '<span class="ets-spinner"></span>';
+				$restrictcontent_discord .= '<p>' . esc_html__( sprintf( 'Connected account: %s', $_ets_badgeos_discord_username ), 'connect-badgeos-to-discord' ) . '</p>';
+				$restrictcontent_discord  = ets_badgeos_discord_get_user_avatar( $discord_user_id, $discord_user_avatar, $restrictcontent_discord );
+				$restrictcontent_discord  = ets_badgeos_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
+				$restrictcontent_discord .= '</div>';
+				$restrictcontent_discord .= '</div>';
+
+			} elseif ( ( ets_badgeos_discord_get_user_ranks_ids( $user_id ) && $mapped_role_name )
+								|| ( ets_badgeos_discord_get_user_ranks_ids( $user_id ) && ! $mapped_role_name && $default_role_name )
+								) {
+
+				$connect_btn_bg_color     = 'style="background-color:' . $ets_badgeos_discord_connect_button_bg_color . '"';
+				$restrictcontent_discord .= '<div>';
+				$restrictcontent_discord .= '<h3>' . esc_html__( 'Discord connection', 'connect-badgeos-to-discord' ) . '</h3>';
+				$restrictcontent_discord .= '<div>';
+				$restrictcontent_discord .= '<a href="?action=badgeos-discord-login" class="badgeos-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_badgeos_discord_loggedin_button_text ) . Connect_badgeos_Discord_Addon::get_discord_logo_white() . '</a>';
+				$restrictcontent_discord .= '</div>';
+				$restrictcontent_discord  = ets_badgeos_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
+
+				$restrictcontent_discord .= '</div>';
+
+			}
+		}
+		wp_enqueue_style( $this->plugin_name );
+		wp_enqueue_script( $this->plugin_name );
+
+		return wp_kses( $restrictcontent_discord, ets_badgeos_discord_allowed_html() );
+	}
+
 }
