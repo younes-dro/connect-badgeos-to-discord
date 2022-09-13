@@ -198,6 +198,7 @@ class Connect_Badgeos_To_Discord {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_shortcode( 'badgeos_discord', $plugin_public, 'ets_badgeos_discord_add_connect_discord_button' );
+		$this->loader->add_filter( 'kses_allowed_protocols', $plugin_public, 'ets_badgeos_discord_allow_data_protocol' );
 
 	}
 

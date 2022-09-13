@@ -196,7 +196,7 @@ class Connect_Badgeos_To_Discord_Public {
 				$restrictcontent_discord .= '<div>';
 				$restrictcontent_discord .= '<h3>' . esc_html__( 'Discord connection', 'connect-badgeos-to-discord' ) . '</h3>';
 				$restrictcontent_discord .= '<div>';
-				$restrictcontent_discord .= '<a href="?action=badgeos-discord-login" class="badgeos-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_badgeos_discord_loggedin_button_text ) . Connect_badgeos_Discord_Addon::get_discord_logo_white() . '</a>';
+				$restrictcontent_discord .= '<a href="?action=badgeos-discord-login" class="badgeos-discord-btn-connect ets-btn" ' . $connect_btn_bg_color . ' >' . esc_html( $ets_badgeos_discord_loggedin_button_text ) . Connect_Badgeos_To_Discord::get_discord_logo_white() . '</a>';
 				$restrictcontent_discord .= '</div>';
 				$restrictcontent_discord  = ets_badgeos_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord );
 
@@ -208,6 +208,18 @@ class Connect_Badgeos_To_Discord_Public {
 		wp_enqueue_script( $this->plugin_name );
 
 		return wp_kses( $restrictcontent_discord, ets_badgeos_discord_allowed_html() );
+	}
+
+	/**
+	 * Allow data protocol.
+	 *
+	 * @since    1.0.0
+	 * @return array
+	 */
+	public function ets_badgeos_discord_allow_data_protocol( $protocols ) {
+
+		$protocols[] = 'data';
+		return $protocols;
 	}
 
 }

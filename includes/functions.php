@@ -200,3 +200,125 @@ function ets_badgeos_discord_get_all_pending_actions() {
 		return false;
 	}
 }
+
+/**
+ * Get User' ranks
+ *
+ * @param INT $suer_id The user's ID.
+ * @return ARRAY|NULL
+ */
+function ets_badgeos_discord_get_user_ranks_ids( $user_id ) {
+
+	$ets_badgeos_user_ranks_ids = array();
+
+	$ranks_user = badgeos_get_user_ranks( array( 'user_id' => $user_id ) );
+
+	if ( is_array( $ranks_user ) && count( $ranks_user ) > 0 ) {
+
+		foreach ( $ranks_user as $rank_user ) {
+			array_push( $ets_badgeos_user_ranks_ids, $rank_user->rank_id );
+
+		}
+
+		return $ets_badgeos_user_ranks_ids;
+	} else {
+
+		return null;
+	}
+
+}
+
+/**
+ * Return the discord user avatar.
+ *
+ * @param INT    $discord_user_id The discord usr ID.
+ * @param STRING $user_avatar Discord avatar hash value.
+ * @param STRING $restrictcontent_discord The html.
+ *
+ * @return STRING
+ */
+function ets_badgeos_discord_get_user_avatar( $discord_user_id, $user_avatar, $restrictcontent_discord ) {
+	if ( $user_avatar ) {
+		$avatar_url               = '<img class="ets-badgeos-user-avatar" src="https://cdn.discordapp.com/avatars/' . $discord_user_id . '/' . $user_avatar . '.png" />';
+		$restrictcontent_discord .= $avatar_url;
+	}
+	return $restrictcontent_discord;
+}
+
+/**
+ * Get message for what role is assigned to the member.
+ *
+ * @param STRING $mapped_role_name
+ * @param STRING $default_role_name
+ * @param STRING $restrictcontent_discord
+ */
+function ets_badgeos_discord_roles_assigned_message( $mapped_role_name, $default_role_name, $restrictcontent_discord ) {
+
+	if ( $mapped_role_name ) {
+		$restrictcontent_discord .= '<p class="ets_assigned_role">';
+
+		$restrictcontent_discord .= esc_html__( 'Following Roles will be assigned to you in Discord: ', 'connect-badgeos-to-discord' );
+		$restrictcontent_discord .= $mapped_role_name;
+		if ( $default_role_name ) {
+			$restrictcontent_discord .= $default_role_name;
+
+		}
+
+		$restrictcontent_discord .= '</p>';
+	} elseif ( $default_role_name ) {
+		$restrictcontent_discord .= '<p class="ets_assigned_role">';
+
+		$restrictcontent_discord .= esc_html__( 'Following Role will be assigned to you in Discord: ', 'connect-badgeos-to-discord' );
+		$restrictcontent_discord .= $default_role_name;
+
+		$restrictcontent_discord .= '</p>';
+
+	}
+	return $restrictcontent_discord;
+}
+
+/**
+ * Get allowed html using WordPress API function wp_kses
+ *
+ * @return STRING $html_message
+ */
+function ets_badgeos_discord_allowed_html() {
+	$allowed_html = array(
+		'div'    => array(
+			'class' => array(),
+		),
+		'p'      => array(
+			'class' => array(),
+		),
+		'a'      => array(
+			'id'           => array(),
+			'data-user-id' => array(),
+			'href'         => array(),
+			'class'        => array(),
+			'style'        => array(),
+		),
+		'label'  => array(
+			'class' => array(),
+		),
+		'h3'     => array(),
+		'span'   => array(
+			'class' => array(),
+		),
+		'i'      => array(
+			'style' => array(),
+			'class' => array(),
+		),
+		'button' => array(
+			'class'        => array(),
+			'data-user-id' => array(),
+			'id'           => array(),
+		),
+		'img'    => array(
+			'src'   => array(),
+			'class' => array(),
+		),
+		'h2'     => array(),
+	);
+
+	return $allowed_html;
+}
