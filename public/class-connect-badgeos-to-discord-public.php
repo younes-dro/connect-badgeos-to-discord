@@ -41,17 +41,43 @@ class Connect_Badgeos_To_Discord_Public {
 	private $version;
 
 	/**
+	 * The single object Connect_Gamipress_Discord_Addon_Public
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var Connect_Badgeos_To_Discord_Public
+	 */
+	private static $instance;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
+	}
+
+	/**
+	 * Singleton pattern
+	 *
+	 * @since    1.0.0
+	 * @param       string $plugin_name       The name of the plugin.
+	 * @param       string $version    The version of this plugin.
+	 * @return      object    $instance   The instance of the Connect_Badgeos_To_Discord_Public class
+	 */
+	public static function get_badgeos_discord_public_instance( $plugin_name, $version ) {
+
+		if ( ! self::$instance ) {
+			self::$instance = new Connect_Badgeos_To_Discord_Public( $plugin_name, $version );
+
+		}
+		return self::$instance;
 	}
 
 	/**
