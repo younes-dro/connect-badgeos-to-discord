@@ -199,6 +199,12 @@ class Connect_Badgeos_To_Discord {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 		$this->loader->add_shortcode( 'badgeos_discord', $plugin_public, 'ets_badgeos_discord_add_connect_discord_button' );
 		$this->loader->add_filter( 'kses_allowed_protocols', $plugin_public, 'ets_badgeos_discord_allow_data_protocol' );
+		$this->loader->add_action( 'init', $plugin_public, 'ets_badgeos_discord_api_callback' );
+		$this->loader->add_action( 'ets_badgeos_discord_as_handle_add_member_to_guild', $plugin_public, 'ets_badgeos_discord_as_handler_add_member_to_guild', 10, 3 );
+		$this->loader->add_action( 'ets_badgeos_discord_as_schedule_member_put_role', $plugin_public, 'ets_badgeos_discord_as_handler_put_member_role', 10, 3 );
+		$this->loader->add_action( 'ets_badgeos_discord_as_send_dm', $plugin_public, 'ets_badgeos_discord_handler_send_dm', 10, 4 );
+		$this->loader->add_action( 'ets_badgeos_discord_as_schedule_delete_role', $plugin_public, 'ets_badgeos_discord_as_handler_delete_memberrole', 10, 3 );
+		$this->loader->add_action( 'ets_badgeos_discord_as_schedule_delete_member', $plugin_public, 'ets_badgeos_discord_as_handler_delete_member_from_guild', 10, 3 );
 
 	}
 

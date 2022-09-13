@@ -322,3 +322,97 @@ function ets_badgeos_discord_allowed_html() {
 
 	return $allowed_html;
 }
+
+  /**
+   * Log API call response
+   *
+   * @param INT          $user_id
+   * @param STRING       $api_url
+   * @param ARRAY        $api_args
+   * @param ARRAY|OBJECT $api_response
+   */
+function ets_badgeos_discord_log_api_response( $user_id, $api_url = '', $api_args = array(), $api_response = '' ) {
+	$log_api_response = get_option( 'ets_badgeos_discord_log_api_response' );
+	if ( $log_api_response == true ) {
+		$log_string  = '==>' . $api_url;
+		$log_string .= '-::-' . serialize( $api_args );
+		$log_string .= '-::-' . serialize( $api_response );
+
+		$logs = new Connect_Badgeos_To_Discord_Logs();
+		$logs->write_api_response_logs( $log_string, $user_id );
+	}
+}
+
+/**
+ * Check API call response and detect conditions which can cause of action failure and retry should be attemped.
+ *
+ * @param ARRAY|OBJECT $api_response
+ * @param BOOLEAN
+ */
+function ets_badgeos_discord_check_api_errors( $api_response ) {
+	// check if response code is a WordPress error.
+	if ( is_wp_error( $api_response ) ) {
+		return true;
+	}
+
+	// First Check if response contain codes which should not get re-try.
+	$body = json_decode( wp_remote_retrieve_body( $api_response ), true );
+	if ( isset( $body['code'] ) && in_array( $body['code'], BADGEOS_DISCORD_DONOT_RETRY_THESE_API_CODES ) ) {
+		return false;
+	}
+
+	$response_code = strval( $api_response['response']['code'] );
+	if ( isset( $api_response['response']['code'] ) && in_array( $response_code, BADGEOS_DISCORD_DONOT_RETRY_HTTP_CODES ) ) {
+		return false;
+	}
+
+	// check if response code is in the range of HTTP error.
+	if ( ( 400 <= absint( $response_code ) ) && ( absint( $response_code ) <= 599 ) ) {
+		return true;
+	}
+}
+
+/**
+ * Get User's roles ids
+ *
+ * @param INT $user_id
+ * @return ARRAY|NULL $roles
+ */
+function ets_badgeos_discord_get_user_roles( $user_id ) {
+	global $wpdb;
+
+	$usermeta_table     = $wpdb->prefix . 'usermeta';
+	$user_roles_sql     = 'SELECT * FROM ' . $usermeta_table . " WHERE `user_id` = %d AND ( `meta_key` like '_ets_badgeos_discord_role_id_for_%' OR `meta_key` = 'ets_badgeos_discord_default_role_id' OR `meta_key` = '_ets_badgeos_discord_last_default_role' ); ";
+	$user_roles_prepare = $wpdb->prepare( $user_roles_sql, $user_id );
+
+	$user_roles = $wpdb->get_results( $user_roles_prepare, ARRAY_A );
+
+	if ( is_array( $user_roles ) && count( $user_roles ) ) {
+		$roles = array();
+		foreach ( $user_roles as  $role ) {
+
+			array_push( $roles, $role['meta_value'] );
+		}
+
+		return $roles;
+
+	} else {
+		return null;
+	}
+}
+
+/**
+ * Remove all usermeta created by this plugin.
+ *
+ * @param INT $user_id
+ */
+function ets_badgeos_discord_remove_usermeta( $user_id ) {
+
+	global $wpdb;
+
+	$usermeta_table      = $wpdb->prefix . 'usermeta';
+	$usermeta_sql        = 'DELETE FROM ' . $usermeta_table . " WHERE `user_id` = %d AND  `meta_key` LIKE '_ets_badgeos_discord%'; ";
+	$delete_usermeta_sql = $wpdb->prepare( $usermeta_sql, $user_id );
+	$wpdb->query( $delete_usermeta_sql );
+}
+
