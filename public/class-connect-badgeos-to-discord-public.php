@@ -41,7 +41,7 @@ class Connect_Badgeos_To_Discord_Public {
 	private $version;
 
 	/**
-	 * The single object Connect_Gamipress_Discord_Addon_Public
+	 * The single object Connect_Badgeos_To_Discord_Public
 	 *
 	 * @since    1.0.0
 	 * @access   private
