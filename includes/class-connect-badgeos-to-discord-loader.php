@@ -148,6 +148,10 @@ class Connect_Badgeos_To_Discord_Loader {
 			add_action( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
 		}
 
+		foreach ( $this->shortcodes as $hook ) {
+			add_shortcode( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );
+		}
+
 	}
 
 }
