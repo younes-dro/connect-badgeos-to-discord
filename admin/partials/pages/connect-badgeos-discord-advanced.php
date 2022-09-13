@@ -8,8 +8,6 @@ $ets_badgeos_discord_award_rank_message = sanitize_text_field( trim( get_option(
 $ets_badgeos_discord_send_award_user_points_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_user_points_dm' ) ) );
 $ets_badgeos_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_award_user_points_message' ) ) );
 
-$ets_badgeos_discord_send_deduct_user_points_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_deduct_user_points_dm' ) ) );
-$ets_badgeos_discord_deduct_user_points_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_deduct_user_points_message' ) ) );
 
 $retry_failed_api     = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_retry_failed_api' ) ) );
 $kick_upon_disconnect = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_kick_upon_disconnect' ) ) );
@@ -94,26 +92,7 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_badgeos_disc
 	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_POINTS],[GP_ACHIEVEMENT_TYPE], [GP_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Send Deduct user points message', 'connect-badgeos-to-discord' ); ?></th>
-		<td> <fieldset>
-		<input name="ets_badgeos_discord_send_deduct_user_points_dm" type="checkbox" id="ets_badgeos_discord_deduct_user_points_welcome_dm" 
-		<?php
-		if ( $ets_badgeos_discord_send_deduct_user_points_dm == true ) {
-			echo esc_attr( 'checked="checked"' ); }
-		?>
-		 value="1">
-		</fieldset></td>
-	</tr>
-	<tr>
-		<th scope="row"><?php esc_html_e( 'Deduct user points message', 'connect-badgeos-to-discord' ); ?></th>
-		<td> <fieldset>
-		<?php $ets_badgeos_discord_deduct_user_points_message_value = ( isset( $ets_badgeos_discord_deduct_user_points_message ) ) ? $ets_badgeos_discord_deduct_user_points_message : ''; ?>
-		<textarea class="ets_badgeos_discord_dm_textarea" name="ets_badgeos_discord_deduct_user_points_message" id="ets_badgeos_discord_deduct_user_points_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_badgeos_discord_deduct_user_points_message_value ) ); ?></textarea> 
-	<br/>
-	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_DEDUCT_POINTS], [GP_POINTS_TYPE], [GP_POINTS_LABEL], [GP_POINTS_BALANCE], [SITE_URL], [BLOG_NAME]</small>
-		</fieldset></td>
-	</tr>		
+	
 	  <tr>
 		<th scope="row"><?php esc_html_e( 'Retry Failed API calls', 'connect-badgeos-to-discord' ); ?></th>
 		<td> <fieldset>
