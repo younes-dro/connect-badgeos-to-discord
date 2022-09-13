@@ -41,16 +41,26 @@ class Connect_Badgeos_To_Discord_Admin {
 	private $version;
 
 	/**
+	 * Instance of Connect_Badgeos_To_Discord_Public class
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 * @var      Connect_Badgeos_To_Discord_Public
+	 */
+	private $badgeos_discord_public_instance;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 * @param      string $plugin_name       The name of this plugin.
 	 * @param      string $version    The version of this plugin.
 	 */
-	public function __construct( $plugin_name, $version ) {
+	public function __construct( $plugin_name, $version, $badgeos_discord_public_instance ) {
 
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
+		$this->plugin_name                     = $plugin_name;
+		$this->version                         = $version;
+		$this->badgeos_discord_public_instance = $badgeos_discord_public_instance;
 
 	}
 

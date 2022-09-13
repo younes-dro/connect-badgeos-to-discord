@@ -170,7 +170,7 @@ class Connect_Badgeos_To_Discord {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Connect_Badgeos_To_Discord_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Connect_Badgeos_To_Discord_Admin( $this->get_plugin_name(), $this->get_version(), Connect_Badgeos_To_Discord_Public::get_badgeos_discord_public_instance( $this->plugin_name, $this->version ) );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
