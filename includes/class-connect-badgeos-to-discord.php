@@ -206,6 +206,9 @@ class Connect_Badgeos_To_Discord {
 		$this->loader->add_action( 'ets_badgeos_discord_as_schedule_delete_role', $plugin_public, 'ets_badgeos_discord_as_handler_delete_memberrole', 10, 3 );
 		$this->loader->add_action( 'ets_badgeos_discord_as_schedule_delete_member', $plugin_public, 'ets_badgeos_discord_as_handler_delete_member_from_guild', 10, 3 );
 
+		// $this->loader->add_action( 'badgeos_after_revoke_rank', $plugin_public, 'ets_badgeos_discord_badgeos_after_revoke_rank', 10, 3 );
+		$this->loader->add_action( 'badgeos_after_award_rank', $plugin_public, 'ets_badgeos_discord_badgeos_after_award_rank', 10, 8 );
+
 	}
 
 	/**

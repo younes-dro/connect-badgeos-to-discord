@@ -590,6 +590,11 @@ class Connect_Badgeos_To_Discord_Public {
 			$message                             = ets_badgeos_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $ets_badgeos_discord_welcome_message );
 		}
 
+		if ( $type == 'award_rank' ) {
+			$ets_badgeos_discord_award_rank_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_award_rank_message' ) ) );
+			$message                                = ets_badgeos_discord_get_formatted_award_rank_dm( $user_id, $ranks_user, $ets_badgeos_discord_award_rank_message );
+		}
+
 		$creat_dm_url = CONNECT_BADGEOS_TO_DISCORD_API_URL . '/channels/' . $dm_channel_id . '/messages';
 
 		$dm_args = array(
@@ -804,6 +809,43 @@ class Connect_Badgeos_To_Discord_Public {
 
 		/*Delete all usermeta related to discord connection*/
 		ets_badgeos_discord_remove_usermeta( $user_id );
+
+	}
+
+	/**
+	 * Sends Discord message  when a rank is awarded.
+	 *
+	 * @param $user_id
+	 * @param $achievement_id
+	 * @param $this_trigger
+	 * @param $site_id
+	 * @param $args
+	 * @param $entry_id
+	 *
+	 * @return none
+	 */
+	public function ets_badgeos_discord_badgeos_after_award_rank( $user_id, $rank_id, $rank_type, $credit_id, $credit_amount, $admin_id, $this_trigger, $rank_entry_id = 0 ) {
+
+		// update_option( 'badgeos_rank_awarded_user_id_' . time (), $user_id );
+		// update_option( 'badgeos_rank_awarded_rank_id_' . time (), $rank_id );
+		// update_option( 'badgeos_rank_awarded_rank_type' . time (), $rank_type );
+
+		// return;
+
+		$ets_badgeos_discord_send_award_rank_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_rank_dm' ) ) );
+		// $access_token                                   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		// $refresh_token         = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_refresh_token', true ) ) );
+
+		if ( isset( $user_id ) && isset( $rank_id ) && $ets_badgeos_discord_send_award_rank_dm == true ) {
+			as_schedule_single_action( ets_badgeos_discord_get_random_timestamp( ets_badgeos_discord_get_highest_last_attempt_timestamp() ), 'ets_badgeos_discord_as_send_dm', array( $user_id, $rank_id, 'award_rank' ), BADGEOS_DISCORD_AS_GROUP_NAME );
+		}
+
+	}
+
+	/**
+	 *
+	 */
+	public function ets_badgeos_discord_badgeos_after_revoke_rank( $user_id, $rank_id, $entry_id ) {
 
 	}
 

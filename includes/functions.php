@@ -469,3 +469,62 @@ function ets_badgeos_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $m
 		return str_replace( $find, $replace, $message );
 
 }
+
+/**
+ * Get formatted award user Rank message to send in DM.
+ *
+ * @param INT $user_id The user ID.
+ * @param INT $rank_id The rank ID.
+ * Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_RANK_TYPE], [BADGE_RANK], [BADGE_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME]
+ */
+function ets_badgeos_discord_get_formatted_award_rank_dm( $user_id, $rank_id, $message ) {
+	$user_obj   = get_user_by( 'id', $user_id );
+	$USERNAME   = $user_obj->user_login;
+	$USER_EMAIL = $user_obj->user_email;
+	$SITE_URL   = get_bloginfo( 'url' );
+	$BLOG_NAME  = get_bloginfo( 'name' );
+
+	$rank       = get_post( $rank_id );
+	$RANK_TITLE = $rank->post_title;
+
+	$RANK_TYPE = '';
+	$args      = array(
+		'name'        => $rank->post_type,
+		'post_type'   => 'rank-type',
+		'post_status' => 'publish',
+		'numberposts' => 1,
+	);
+	$rank_type = get_posts( $args );
+	if ( is_array( $rank_type ) && count( $rank_type ) > 0 ) {
+		$RANK_TYPE = $rank_type[0]->post_title;
+	}
+
+	$RANK_REQUIREMENTS = '';
+
+	$rank_requirements = badgeos_get_rank_requirements( $rank_id );
+	if ( is_array( $rank_requirements ) && count( $rank_requirements ) > 0 ) {
+		foreach ( $rank_requirements as $rank_requirement ) {
+			$RANK_REQUIREMENTS .= ' ' . $rank_requirement->post_title;
+		}
+	}
+	$find    = array(
+		'[BADGE_USER_NAME]',
+		'[BADGE_USER_EMAIL]',
+		'[BADGE_RANK_TYPE]',
+		'[BADGE_RANK]',
+		'[BADGE_RANK_REQUIREMENTS]',
+		'[SITE_URL]',
+		'[BLOG_NAME]',
+	);
+	$replace = array(
+		$USERNAME,
+		$USER_EMAIL,
+		$RANK_TYPE,
+		$RANK_TITLE,
+		$RANK_REQUIREMENTS,
+		$SITE_URL,
+		$BLOG_NAME,
+	);
+
+	return str_replace( $find, $replace, $message );
+}
