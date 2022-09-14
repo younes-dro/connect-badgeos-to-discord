@@ -574,8 +574,6 @@ class Connect_Badgeos_To_Discord_Public {
 		$discord_user_id   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_user_id', true ) ) );
 		$discord_bot_token = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_bot_token' ) ) );
 
-		$ets_badgeos_discord_welcome_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_welcome_message' ) ) );
-
 		// Check if DM channel is already created for the user.
 		$user_dm = get_user_meta( $user_id, '_ets_badgeos_discord_dm_channel', true );
 
@@ -588,8 +586,8 @@ class Connect_Badgeos_To_Discord_Public {
 		}
 
 		if ( $type == 'welcome' ) {
-			$message = 'Welcome BAdgesOS Discord';
-			//$message = ets_badgeos_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $ets_badgeos_discord_welcome_message );
+			$ets_badgeos_discord_welcome_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_welcome_message' ) ) );
+			$message                             = ets_badgeos_discord_get_formatted_welcome_dm( $user_id, $ranks_user, $ets_badgeos_discord_welcome_message );
 		}
 
 		$creat_dm_url = CONNECT_BADGEOS_TO_DISCORD_API_URL . '/channels/' . $dm_channel_id . '/messages';
