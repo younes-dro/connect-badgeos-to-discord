@@ -844,9 +844,26 @@ class Connect_Badgeos_To_Discord_Public {
 
 	/**
 	 *
+	 * Remove Rank's role
 	 */
 	public function ets_badgeos_discord_badgeos_after_revoke_rank( $user_id, $rank_id, $entry_id ) {
 
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( 'Unauthorized user', 401 );
+			exit();
+		}
+		$access_token                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		$ets_badgeos_discord_role_mapping = json_decode( get_option( 'ets_badgeos_discord_role_mapping' ), true );
+		$all_roles                        = unserialize( get_option( 'ets_badgeos_discord_all_roles' ) );
+
+		if ( $access_token && $rank_id && is_array( $all_roles ) && is_array( $ets_badgeos_discord_role_mapping ) ) {
+
+			if ( array_key_exists( 'badgeos_rank_type_id_' . $rank_id, $ets_badgeos_discord_role_mapping ) ) {
+
+				$old_role_id = $ets_badgeos_discord_role_mapping[ 'badgeos_rank_type_id_' . $rank_id ];
+				$this->delete_discord_role( $user_id, $old_role_id );
+			}
+		}
 	}
 
 }
