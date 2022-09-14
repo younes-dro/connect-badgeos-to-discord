@@ -31,11 +31,11 @@ class Connect_Badgeos_To_Discord_Activator {
 	 */
 	public static function activate() {
 		update_option( 'ets_badgeos_discord_send_welcome_dm', true );
-		update_option( 'ets_badgeos_discord_welcome_message', 'Hi [GP_USER_NAME] ([GP_USER_EMAIL]), Welcome, Your ranks [GP_RANKS] at [SITE_URL] Thanks, Kind Regards, [BLOG_NAME]' );
+		update_option( 'ets_badgeos_discord_welcome_message', 'Hi [BADGE_USER_NAME] ([BADGE_USER_EMAIL]), Welcome, Your ranks [BADGE_RANKS] at [SITE_URL] Thanks, Kind Regards, [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_send_award_rank_dm', true );
-		update_option( 'ets_badgeos_discord_award_rank_message', 'Congratulations [GP_USER_NAME]! You reached the [GP_RANK_TYPE] [GP_RANK] by completing the following requirements: [GP_RANK_REQUIREMENTS] , Regards, [SITE_URL], [BLOG_NAME]' );
+		update_option( 'ets_badgeos_discord_award_rank_message', 'Congratulations [BADGE_USER_NAME]! You reached the [BADGE_RANK_TYPE] [BADGE_RANK] by completing the following requirements: [BADGE_RANK_REQUIREMENTS] , Regards, [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_send_award_user_points_dm', true );
-		update_option( 'ets_badgeos_discord_award_user_points_message', 'Congratulations [GP_USER_NAME]( [GP_USER_EMAIL] ), You unlocked the [GP_ACHIEVEMENT_TYPE] [GP_ACHIEVEMENT] by completing the following steps: [GP_ACHIEVEMENT_STEPS], Points Awarded : [GP_POINTS], [SITE_URL], [BLOG_NAME]' );
+		update_option( 'ets_badgeos_discord_award_user_points_message', 'Congratulations [BADGE_USER_NAME]( [BADGE_USER_EMAIL] ), You unlocked the [BADGE_ACHIEVEMENT_TYPE] [BADGE_ACHIEVEMENT] by completing the following steps: [BADGE_ACHIEVEMENT_STEPS], Points Awarded : [BADGE_POINTS], [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_retry_failed_api', true );
 		update_option( 'ets_badgeos_discord_connect_button_bg_color', '#7bbc36' );
 		update_option( 'ets_badgeos_discord_disconnect_button_bg_color', '#ff0000' );
