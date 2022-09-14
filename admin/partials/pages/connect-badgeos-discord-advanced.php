@@ -49,7 +49,7 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_badgeos_disc
 			<?php $ets_badgeos_discord_welcome_message_value = ( isset( $ets_badgeos_discord_welcome_message ) ) ? $ets_badgeos_discord_welcome_message : ''; ?>
 		<textarea class="ets_badgeos_discord_dm_textarea" name="ets_badgeos_discord_welcome_message" id="ets_badgeos_discord_welcome_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_badgeos_discord_welcome_message_value ) ); ?></textarea> 
 	<br/>
-	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANKS], [SITE_URL], [BLOG_NAME]</small>
+	<small>Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_RANKS], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>
 	<tr>
@@ -69,7 +69,7 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_badgeos_disc
 		<?php $ets_badgeos_discord_award_rank_message_value = ( isset( $ets_badgeos_discord_award_rank_message ) ) ? $ets_badgeos_discord_award_rank_message : ''; ?>
 		<textarea class="ets_badgeos_discord_dm_textarea" name="ets_badgeos_discord_award_rank_message" id="ets_badgeos_discord_award_rank_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_badgeos_discord_award_rank_message_value ) ); ?></textarea> 
 	<br/>
-	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_RANK_TYPE], [GP_RANK], [GP_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME]</small>
+	<small>Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_RANK_TYPE], [BADGE_RANK], [BADGE_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>	
 	<tr>
@@ -89,7 +89,7 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_badgeos_disc
 		<?php $ets_badgeos_discord_award_user_points_message_value = ( isset( $ets_badgeos_discord_award_user_points_message ) ) ? $ets_badgeos_discord_award_user_points_message : ''; ?>
 		<textarea class="ets_badgeos_discord_dm_textarea" name="ets_badgeos_discord_award_user_points_message" id="ets_badgeos_discord_award_user_points_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_badgeos_discord_award_user_points_message_value ) ); ?></textarea> 
 	<br/>
-	<small>Merge fields: [GP_USER_NAME], [GP_USER_EMAIL], [GP_POINTS],[GP_ACHIEVEMENT_TYPE], [GP_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]</small>
+	<small>Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_POINTS],[BADGE_ACHIEVEMENT_TYPE], [BADGE_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>
 	
