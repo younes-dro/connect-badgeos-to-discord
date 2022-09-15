@@ -564,3 +564,51 @@ function ets_badgeos_discord_get_formatted_earned_achievement_dm( $user_id, $ach
 
 	return str_replace( $find, $replace, $message );
 }
+
+/**
+ * Get formatted earnded user points message to send in DM.
+ *
+ * @param INT    $user_id The user ID.
+ * @param INT    $rec_id The achievement ID.
+ * @param STRING $message Formatted message to send.
+ * Merge fields: Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_CREDIT], [BADGE_POINT_TITILE], [BADGE_DATE_EARNED], [SITE_URL], [BLOG_NAME].
+ */
+function ets_badgeos_discord_get_formatted_earned_points_dm( $user_id, $rec_id, $message ) {
+	//global $wpdb;
+	$user_obj   = get_user_by( 'id', $user_id );
+	$USERNAME   = $user_obj->user_login;
+	$USER_EMAIL = $user_obj->user_email;
+	$SITE_URL   = get_bloginfo( 'url' );
+	$BLOG_NAME  = get_bloginfo( 'name' );
+
+/* 	$table_name = $wpdb->prefix . 'badgeos_points';
+	$results = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT `post_title` FROM {$table_name} WHERE id=%d", absint( $point_rec_id )
+		),
+		'ARRAY_A'
+	); */
+
+	$BADGE_CREDIT = '';
+
+	$BADGE_POINT_TITILE = get_the_title( $rec_id );
+
+	$find    = array(
+		'[BADGE_USER_NAME]',
+		'[BADGE_USER_EMAIL]',
+		'[BADGE_CREDIT]',
+		'[BADGE_POINT_TITILE]',
+		'[SITE_URL]',
+		'[BLOG_NAME]',
+	);
+	$replace = array(
+		$USERNAME,
+		$USER_EMAIL,
+		$BADGE_CREDIT,
+		$BADGE_POINT_TITILE,
+		$SITE_URL,
+		$BLOG_NAME,
+	);
+
+	return str_replace( $find, $replace, $message );
+}
