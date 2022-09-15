@@ -5,6 +5,9 @@ $ets_badgeos_discord_welcome_message = sanitize_text_field( trim( get_option( 'e
 $ets_badgeos_discord_send_award_rank_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_rank_dm' ) ) );
 $ets_badgeos_discord_award_rank_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_award_rank_message' ) ) );
 
+$ets_badgeos_discord_send_earned_achievement_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_earned_achievement_dm' ) ) );
+$ets_badgeos_discord_earned_achievement_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_earned_achievement_message' ) ) );
+
 $ets_badgeos_discord_send_award_user_points_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_user_points_dm' ) ) );
 $ets_badgeos_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_award_user_points_message' ) ) );
 
@@ -71,7 +74,27 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_badgeos_disc
 	<br/>
 	<small>Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_RANK_TYPE], [BADGE_RANK], [BADGE_RANK_REQUIREMENTS], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
-	</tr>	
+	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Send Earned Achievement message', 'connect-badgeos-to-discord' ); ?></th>
+		<td> <fieldset>
+		<input name="ets_badgeos_discord_send_earned_achievement_dm" type="checkbox" id="ets_badgeos_discord_send_earned_achievement_dm" 
+		<?php
+		if ( $ets_badgeos_discord_send_earned_achievement_dm == true ) {
+			echo esc_attr( 'checked="checked"' ); }
+		?>
+		 value="1">
+		</fieldset></td>
+	</tr>
+	<tr>
+		<th scope="row"><?php esc_html_e( 'Earned Achievement message', 'connect-badgeos-to-discord' ); ?></th>
+		<td> <fieldset>
+		<?php $ets_badgeos_discord_earned_achievement_message_value = ( isset( $ets_badgeos_discord_earned_achievement_message ) ) ? $ets_badgeos_discord_earned_achievement_message : ''; ?>
+		<textarea class="ets_badgeos_discord_dm_textarea" name="ets_badgeos_discord_earned_achievement_message" id="ets_badgeos_discord_earned_achievement_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_badgeos_discord_earned_achievement_message_value ) ); ?></textarea> 
+	<br/>
+	<small>Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]</small>
+		</fieldset></td>
+	</tr>		
 	<tr>
 		<th scope="row"><?php esc_html_e( 'Send Award user points message', 'connect-badgeos-to-discord' ); ?></th>
 		<td> <fieldset>

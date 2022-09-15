@@ -374,10 +374,11 @@ class Connect_Badgeos_To_Discord_Admin {
 			exit();
 		}
 
-			$ets_badgeos_discord_send_welcome_dm           = isset( $_POST['ets_badgeos_discord_send_welcome_dm'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_send_welcome_dm'] ) ) : '';
-			$ets_badgeos_discord_welcome_message           = isset( $_POST['ets_badgeos_discord_welcome_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_welcome_message'] ) ) : '';
-			$ets_badgeos_discord_award_rank_message        = isset( $_POST['ets_badgeos_discord_award_rank_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_award_rank_message'] ) ) : '';
-			$ets_badgeos_discord_award_user_points_message = isset( $_POST['ets_badgeos_discord_award_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_award_user_points_message'] ) ) : '';
+			$ets_badgeos_discord_send_welcome_dm            = isset( $_POST['ets_badgeos_discord_send_welcome_dm'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_send_welcome_dm'] ) ) : '';
+			$ets_badgeos_discord_welcome_message            = isset( $_POST['ets_badgeos_discord_welcome_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_welcome_message'] ) ) : '';
+			$ets_badgeos_discord_award_rank_message         = isset( $_POST['ets_badgeos_discord_award_rank_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_award_rank_message'] ) ) : '';
+			$ets_badgeos_discord_earned_achievement_message = isset( $_POST['ets_badgeos_discord_earned_achievement_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_earned_achievement_message'] ) ) : '';
+			$ets_badgeos_discord_award_user_points_message  = isset( $_POST['ets_badgeos_discord_award_user_points_message'] ) ? sanitize_textarea_field( trim( $_POST['ets_badgeos_discord_award_user_points_message'] ) ) : '';
 
 			$retry_failed_api     = isset( $_POST['retry_failed_api'] ) ? sanitize_textarea_field( trim( $_POST['retry_failed_api'] ) ) : '';
 			$kick_upon_disconnect = isset( $_POST['kick_upon_disconnect'] ) ? sanitize_textarea_field( trim( $_POST['kick_upon_disconnect'] ) ) : '';
@@ -410,6 +411,17 @@ class Connect_Badgeos_To_Discord_Admin {
 					update_option( 'ets_badgeos_discord_award_rank_message', $ets_badgeos_discord_award_rank_message );
 				} else {
 					update_option( 'ets_badgeos_discord_award_rank_message', '' );
+				}
+
+				if ( isset( $_POST['ets_badgeos_discord_send_earned_achievement_dm'] ) ) {
+					update_option( 'ets_badgeos_discord_send_earned_achievement_dm', true );
+				} else {
+					update_option( 'ets_badgeos_discord_send_earned_achievement_dm', false );
+				}
+				if ( isset( $_POST['ets_badgeos_discord_earned_achievement_message'] ) && $_POST['ets_badgeos_discord_earned_achievement_message'] != '' ) {
+					update_option( 'ets_badgeos_discord_earned_achievement_message', $ets_badgeos_discord_earned_achievement_message );
+				} else {
+					update_option( 'ets_badgeos_discord_earned_achievement_message', '' );
 				}
 
 				if ( isset( $_POST['ets_badgeos_discord_send_award_user_points_dm'] ) ) {
