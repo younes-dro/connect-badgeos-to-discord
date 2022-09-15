@@ -211,7 +211,7 @@ class Connect_Badgeos_To_Discord {
 
 		$this->loader->add_action( 'badgeos_award_achievement', $plugin_public, 'ets_badgeos_discord_badgeos_award_achievement', 10, 6 );
 
-		// $this->loader->add_action( 'badgeos_after_award_points', $plugin_public, 'ets_badgeos_after_award_points', 10, 8 );
+		$this->loader->add_action( 'badgeos_after_award_points', $plugin_public, 'ets_badgeos_after_award_points', 10, 8 );
 	}
 
 	/**

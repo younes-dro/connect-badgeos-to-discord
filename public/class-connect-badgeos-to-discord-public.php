@@ -599,6 +599,10 @@ class Connect_Badgeos_To_Discord_Public {
 			$ets_badgeos_discord_earned_achievement_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_earned_achievement_message' ) ) );
 			$message                                        = ets_badgeos_discord_get_formatted_earned_achievement_dm( $user_id, $ranks_user, $ets_badgeos_discord_earned_achievement_message );
 		}
+		if ( $type == 'earn_points' ) {
+			$ets_badgeos_discord_award_user_points_message = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_award_user_points_message' ) ) );
+			$message                                       = ets_badgeos_discord_get_formatted_earned_points_dm( $user_id, $ranks_user, $ets_badgeos_discord_award_user_points_message );
+		}
 
 		$creat_dm_url = CONNECT_BADGEOS_TO_DISCORD_API_URL . '/channels/' . $dm_channel_id . '/messages';
 
@@ -893,22 +897,28 @@ class Connect_Badgeos_To_Discord_Public {
 
 	/**
 	 *
+	 * 
 	 */
 
 	public function ets_badgeos_after_award_points( $user_id, $credit_id, $achievement_id, $type, $new_points, $this_trigger, $step_id, $point_rec_id ) {
 
-		update_option( 'badgeos_point_awarded_user_id_' . time(), $user_id );
+/* 		update_option( 'badgeos_point_awarded_user_id_' . time(), $user_id );
 		update_option( 'badgeos_point_awarded_achievement_id_' . time(), $achievement_id );
 		update_option( 'badgeos_point_awarded_new_points_' . time(), $new_points );
 		update_option( 'badgeos_point_awarded_step_id_' . time(), $step_id );
 		update_option( 'badgeos_point_awarded_point_rec_id_' . time(), $point_rec_id );
-		update_option( 'badgeos_point_awarded_credit_id_' . time(), $credit_id );
+		update_option( 'badgeos_point_awarded_credit_id_' . time(), $credit_id ); */
 
 		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
 		$access_token = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		$ets_badgeos_discord_send_award_user_points_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_user_points_dm' ) ) );
+		if ( $access_token && isset( $user_id ) && $ets_badgeos_discord_send_award_user_points_dm == true ) {
+
+			as_schedule_single_action( ets_badgeos_discord_get_random_timestamp( ets_badgeos_discord_get_highest_last_attempt_timestamp() ), 'ets_badgeos_discord_as_send_dm', array( $user_id, $credit_id, 'earn_points' ), BADGEOS_DISCORD_AS_GROUP_NAME );
+		}
 
 	}
 
