@@ -528,3 +528,39 @@ function ets_badgeos_discord_get_formatted_award_rank_dm( $user_id, $rank_id, $m
 
 	return str_replace( $find, $replace, $message );
 }
+
+/**
+ * Get formatted earnded user achievement message to send in DM.
+ *
+ * @param INT    $user_id The user ID.
+ * @param INT    $achievement_id The achievement ID.
+ * @param STRING $message Formatted message to send.
+ * Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_ACHIEVEMENT_TITLE], [SITE_URL], [BLOG_NAME].
+ */
+function ets_badgeos_discord_get_formatted_earned_achievement_dm( $user_id, $achievement_id, $message ) {
+	$user_obj   = get_user_by( 'id', $user_id );
+	$USERNAME   = $user_obj->user_login;
+	$USER_EMAIL = $user_obj->user_email;
+	$SITE_URL   = get_bloginfo( 'url' );
+	$BLOG_NAME  = get_bloginfo( 'name' );
+
+	$achievement       = get_post( $achievement_id );
+	$ACHIEVEMENT_TITLE = $achievement->post_title;
+
+	$find    = array(
+		'[BADGE_USER_NAME]',
+		'[BADGE_USER_EMAIL]',
+		'[BADGE_ACHIEVEMENT_TITLE]',
+		'[SITE_URL]',
+		'[BLOG_NAME]',
+	);
+	$replace = array(
+		$USERNAME,
+		$USER_EMAIL,
+		$ACHIEVEMENT_TITLE,
+		$SITE_URL,
+		$BLOG_NAME,
+	);
+
+	return str_replace( $find, $replace, $message );
+}
