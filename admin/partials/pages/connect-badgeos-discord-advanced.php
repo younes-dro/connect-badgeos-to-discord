@@ -92,7 +92,7 @@ $log_api_res          = sanitize_text_field( trim( get_option( 'ets_badgeos_disc
 		<?php $ets_badgeos_discord_earned_achievement_message_value = ( isset( $ets_badgeos_discord_earned_achievement_message ) ) ? $ets_badgeos_discord_earned_achievement_message : ''; ?>
 		<textarea class="ets_badgeos_discord_dm_textarea" name="ets_badgeos_discord_earned_achievement_message" id="ets_badgeos_discord_earned_achievement_message" row="25" cols="50"><?php echo esc_textarea( wp_unslash( $ets_badgeos_discord_earned_achievement_message_value ) ); ?></textarea> 
 	<br/>
-	<small>Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_ACHIEVEMENT], [SITE_URL], [BLOG_NAME]</small>
+	<small>Merge fields: [BADGE_USER_NAME], [BADGE_USER_EMAIL], [BADGE_ACHIEVEMENT__TITLE], [SITE_URL], [BLOG_NAME]</small>
 		</fieldset></td>
 	</tr>		
 	<tr>
