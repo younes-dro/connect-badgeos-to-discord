@@ -37,7 +37,7 @@ class Connect_Badgeos_To_Discord_Activator {
 		update_option( 'ets_badgeos_discord_send_earned_achievement_dm', true );
 		update_option( 'ets_badgeos_discord_earned_achievement_message', 'Congratulations [BADGE_USER_NAME]! You have earned a new achievement i.e. "[BADGE_ACHIEVEMENT_TITLE]" , Regards, [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_send_award_user_points_dm', true );
-		update_option( 'ets_badgeos_discord_award_user_points_message', 'Congratulations [BADGE_USER_NAME]( [BADGE_USER_EMAIL] ), You unlocked the [BADGE_ACHIEVEMENT_TYPE] [BADGE_ACHIEVEMENT] by completing the following steps: [BADGE_ACHIEVEMENT_STEPS], Points Awarded : [BADGE_POINTS], [SITE_URL], [BLOG_NAME]' );
+		update_option( 'ets_badgeos_discord_award_user_points_message', 'Congratulations [BADGE_USER_NAME]( [BADGE_USER_EMAIL] ), You have earned [BADGE_CREDIT] [BADGE_POINT_TITILE] at [BADGE_DATE_EARNED], [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_retry_failed_api', true );
 		update_option( 'ets_badgeos_discord_connect_button_bg_color', '#7bbc36' );
 		update_option( 'ets_badgeos_discord_disconnect_button_bg_color', '#ff0000' );
