@@ -34,6 +34,8 @@ class Connect_Badgeos_To_Discord_Activator {
 		update_option( 'ets_badgeos_discord_welcome_message', 'Hi [BADGE_USER_NAME] ([BADGE_USER_EMAIL]), Welcome, Your ranks [BADGE_RANKS] at [SITE_URL] Thanks, Kind Regards, [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_send_award_rank_dm', true );
 		update_option( 'ets_badgeos_discord_award_rank_message', 'Congratulations [BADGE_USER_NAME]! You reached the [BADGE_RANK_TYPE] [BADGE_RANK] by completing the following requirements: [BADGE_RANK_REQUIREMENTS] , Regards, [SITE_URL], [BLOG_NAME]' );
+		update_option( 'ets_badgeos_discord_send_earned_achievement_dm', true );
+		update_option( 'ets_badgeos_discord_earned_achievement_message', 'Congratulations [BADGE_USER_NAME]! You have earned a new achievement i.e. "[BADGE_ACHIEVEMENT_TITLE]" , Regards, [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_send_award_user_points_dm', true );
 		update_option( 'ets_badgeos_discord_award_user_points_message', 'Congratulations [BADGE_USER_NAME]( [BADGE_USER_EMAIL] ), You unlocked the [BADGE_ACHIEVEMENT_TYPE] [BADGE_ACHIEVEMENT] by completing the following steps: [BADGE_ACHIEVEMENT_STEPS], Points Awarded : [BADGE_POINTS], [SITE_URL], [BLOG_NAME]' );
 		update_option( 'ets_badgeos_discord_retry_failed_api', true );
