@@ -123,6 +123,13 @@ class Connect_Badgeos_To_Discord_Public {
 		 */
 		$min_js = ( defined( 'WP_DEBUG' ) && true === WP_DEBUG ) ? '' : '.min';
 		wp_register_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/connect-badgeos-to-discord-public' . $min_js . '.js', array( 'jquery' ), $this->version, false );
+		$script_params = array(
+			'admin_ajax'                => admin_url( 'admin-ajax.php' ),
+			'permissions_const'         => CONNECT_BADGEOS_TO_DISCORD_OAUTH_SCOPES,
+			'is_admin'                  => is_admin(),
+			'ets_badgeos_discord_nonce' => wp_create_nonce( 'ets-badgeos-discord-ajax-nonce' ),
+		);
+		wp_localize_script( $this->plugin_name, 'etsBadgeOSParams', $script_params );
 
 	}
 
@@ -842,7 +849,7 @@ class Connect_Badgeos_To_Discord_Public {
 		// return;
 
 		$ets_badgeos_discord_send_award_rank_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_rank_dm' ) ) );
-		$access_token                                   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		$access_token                           = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
 		// $refresh_token         = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_refresh_token', true ) ) );
 
 		if ( $access_token && isset( $user_id ) && isset( $rank_id ) && $ets_badgeos_discord_send_award_rank_dm == true ) {
@@ -887,7 +894,7 @@ class Connect_Badgeos_To_Discord_Public {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
-		$access_token = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		$access_token                                   = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
 		$ets_badgeos_discord_send_earned_achievement_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_earned_achievement_dm' ) ) );
 		if ( $access_token && isset( $user_id ) && isset( $achievement_id ) && $ets_badgeos_discord_send_earned_achievement_dm == true ) {
 			as_schedule_single_action( ets_badgeos_discord_get_random_timestamp( ets_badgeos_discord_get_highest_last_attempt_timestamp() ), 'ets_badgeos_discord_as_send_dm', array( $user_id, $achievement_id, 'earn_achievement' ), BADGEOS_DISCORD_AS_GROUP_NAME );
@@ -897,12 +904,13 @@ class Connect_Badgeos_To_Discord_Public {
 
 	/**
 	 *
-	 * 
+	 *
 	 */
 
 	public function ets_badgeos_after_award_points( $user_id, $credit_id, $achievement_id, $type, $new_points, $this_trigger, $step_id, $point_rec_id ) {
 
-/* 		update_option( 'badgeos_point_awarded_user_id_' . time(), $user_id );
+		/*
+			  update_option( 'badgeos_point_awarded_user_id_' . time(), $user_id );
 		update_option( 'badgeos_point_awarded_achievement_id_' . time(), $achievement_id );
 		update_option( 'badgeos_point_awarded_new_points_' . time(), $new_points );
 		update_option( 'badgeos_point_awarded_step_id_' . time(), $step_id );
@@ -913,11 +921,27 @@ class Connect_Badgeos_To_Discord_Public {
 			wp_send_json_error( 'Unauthorized user', 401 );
 			exit();
 		}
-		$access_token = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		$access_token                                  = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
 		$ets_badgeos_discord_send_award_user_points_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_user_points_dm' ) ) );
 		if ( $access_token && isset( $user_id ) && $ets_badgeos_discord_send_award_user_points_dm == true ) {
 
 			as_schedule_single_action( ets_badgeos_discord_get_random_timestamp( ets_badgeos_discord_get_highest_last_attempt_timestamp() ), 'ets_badgeos_discord_as_send_dm', array( $user_id, $credit_id, 'earn_points' ), BADGEOS_DISCORD_AS_GROUP_NAME );
+		}
+
+	}
+
+
+	/**
+	 * Display connect to discord button for a user on their profile screen
+	 *
+	 * @since  1.0.0
+	 * @param  object $user The current user's $user object
+	 * @return void
+	 */
+	public function ets_badgeos_discord_display_connect_discord_button( $user = null ) {
+
+		if ( is_user_logged_in() ) {
+			echo $this->ets_badgeos_discord_add_connect_discord_button();
 		}
 
 	}
