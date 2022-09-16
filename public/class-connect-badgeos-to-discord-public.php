@@ -746,7 +746,7 @@ class Connect_Badgeos_To_Discord_Public {
 		}
 
 		// Check for nonce security
-		if ( ! wp_verify_nonce( $_POST['ets_badgeos_discord_nonce'], 'ets-badgeos-ajax-nonce' ) ) {
+		if ( ! wp_verify_nonce( $_POST['ets_badgeos_discord_nonce'], 'ets-badgeos-discord-ajax-nonce' ) ) {
 				wp_send_json_error( 'You do not have sufficient rights', 403 );
 				exit();
 		}
@@ -772,6 +772,8 @@ class Connect_Badgeos_To_Discord_Public {
 			'message' => 'Successfully disconnected',
 		);
 		wp_send_json( $event_res );
+
+		exit();
 	}
 
 	/**
