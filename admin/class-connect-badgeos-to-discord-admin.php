@@ -527,4 +527,112 @@ class Connect_Badgeos_To_Discord_Admin {
 
 	}
 
+	/**
+	 * Add BadgeOS Discord column to WP Users listing.
+	 *
+	 * @param ARRAY $columns
+	 * @return NONE
+	 */
+	public function ets_badgeos_discord_add_badgeos_discord_column( $columns ) {
+
+		$columns['ets_badgeos_discord_api'] = esc_html__( 'BadgeOS Discord', 'connect-badgeos-to-discord' );
+		return $columns;
+	}
+
+	/**
+	 * Display Run API button
+	 *
+	 * @param ARRAY $columns
+	 * @return NONE
+	 */
+	public function ets_badgeos_discord_run_badgeos_discord_api( $value, $column_name, $user_id ) {
+
+		if ( $column_name === 'ets_badgeos_discord_api' ) {
+			wp_enqueue_script( $this->plugin_name );
+			$access_token = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+			if ( $access_token ) {
+				return '<a href="#" data-user-id="' . esc_attr( $user_id ) . '" class="ets-badgeos-discord-run-api" >' . esc_html__( 'RUN API', 'connect-badgeos-to-discord' ) . '</a><span class=" run-api spinner" ></span><div class="run-api-success"></div>';
+			}
+			return esc_html__( 'Not Connected', 'connect-badgeos-to-discord' );
+		}
+		return $value;
+	}
+
+	/**
+	 * Run API.
+	 *
+	 * @return NONE
+	 */
+	public function ets_badgeos_discord_run_api() {
+
+		if ( ! current_user_can( 'administrator' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+
+		if ( ! wp_verify_nonce( $_POST['ets_badgeos_discord_nonce'], 'ets-badgeos-discord-ajax-nonce' ) ) {
+			wp_send_json_error( 'You do not have sufficient rights', 403 );
+			exit();
+		}
+
+		$user_id                          = sanitize_text_field( $_POST['ets_badgeos_discord_user_id'] );
+		$access_token                     = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
+		$refresh_token                    = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_refresh_token', true ) ) );
+		$ets_badgeos_discord_role_mapping = json_decode( get_option( 'ets_badgeos_discord_role_mapping' ), true );
+		$default_role                     = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_default_role_id' ) ) );
+		$user_ranks                       = ets_badgeos_discord_get_user_ranks_ids( $user_id );
+		// $user_roles                       = ets_badgeos_discord_get_user_roles( $user_id );
+		$last_default_role = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_last_default_role', true ) ) );
+
+		if ( $access_token && $refresh_token && is_array( $ets_badgeos_discord_role_mapping ) && is_array( $user_ranks ) ) {
+
+			foreach ( $user_ranks as $rank_id ) {
+
+				$user_role_for_this_rank = sanitize_text_field( trim( get_user_meta( '_ets_badgeos_discord_role_id_for_' . $rank_id, true ) ) );
+				if ( $user_role_for_this_rank && array_key_exists( 'badgeos_rank_type_id_' . $rank_id, $ets_badgeos_discord_role_mapping ) && $ets_badgeos_discord_role_mapping[ 'badgeos_rank_type_id_' . $rank_id ] != $user_role_for_this_rank ) {
+
+					// Remove user_role_for_this_rank
+					$old_role = $user_role_for_this_rank;
+					delete_user_meta( $user_id, '_ets_badgeos_discord_role_id_for_' . $rank_id, $old_role );
+					$this->badgeos_discord_public_instance->delete_discord_role( $user_id, $old_role );
+
+					// Assign the role mapped for the rank.
+					$new_role = $ets_badgeos_discord_role_mapping[ 'badgeos_rank_type_id_' . $rank_id ];
+					update_user_meta( $user_id, '_ets_badgeos_discord_role_id_for_' . $rank_id, $new_role );
+					$this->badgeos_discord_public_instance->put_discord_role_api( $user_id, $new_role );
+
+				}
+				if ( ! $user_role_for_this_rank && array_key_exists( 'badgeos_rank_type_id_' . $rank_id, $ets_badgeos_discord_role_mapping ) ) {
+
+					$new_role = $ets_badgeos_discord_role_mapping[ 'badgeos_rank_type_id_' . $rank_id ];
+					update_user_meta( $user_id, '_ets_badgeos_discord_role_id_for_' . $rank_id, $new_role );
+					$this->badgeos_discord_public_instance->put_discord_role_api( $user_id, $new_role );
+				}
+				if ( $user_role_for_this_rank && ! array_key_exists( 'badgeos_rank_type_id_' . $rank_id, $ets_badgeos_discord_role_mapping ) ) {
+					$old_role = $user_role_for_this_rank;
+					delete_user_meta( $user_id, '_ets_badgeos_discord_role_id_for_' . $rank_id, $old_role );
+					$this->badgeos_discord_public_instance->delete_discord_role( $user_id, $old_role );
+				}
+			}
+			if ( $access_token && $refresh_token ) {
+				// Default role
+
+				if ( $default_role && $default_role != 'none' && $default_role === $last_default_role ) {
+
+				} elseif ( $default_role && $default_role != 'none' && $default_role != $last_default_role ) {
+
+					update_user_meta( $user_id, '_ets_badgeos_discord_last_default_role', $default_role );
+					$this->badgeos_discord_public_instance->delete_discord_role( $user_id, $last_default_role );
+					$this->badgeos_discord_public_instance->put_discord_role_api( $user_id, $default_role );
+				} else {
+
+					delete_user_meta( $user_id, '_ets_badgeos_discord_last_default_role' );
+					$this->badgeos_discord_public_instance->delete_discord_role( $user_id, $last_default_role );
+				}
+			}
+		}
+
+		exit();
+	}
+
 }

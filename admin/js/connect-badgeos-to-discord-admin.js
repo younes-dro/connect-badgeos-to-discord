@@ -312,10 +312,41 @@
 		}); 
 
 		
-			$('#ets_badgeos_discord_connect_button_bg_color').wpColorPicker();
-			$('#ets_badgeos_discord_disconnect_button_bg_color').wpColorPicker();
+		$('#ets_badgeos_discord_connect_button_bg_color').wpColorPicker();
+		$('#ets_badgeos_discord_disconnect_button_bg_color').wpColorPicker();
+
+		/*RUN API */
+		$('.ets-badgeos-discord-run-api').click(function (e) {
+			e.preventDefault();
+
+			$.ajax({
+				url: etsBadgeOSParams.admin_ajax,
+				type: "POST",
+				context: this,
+				data: { 'action': 'ets_badgeos_discord_run_api', 'ets_badgeos_discord_user_id': $(this).data('user-id') , 'ets_badgeos_discord_nonce': etsBadgeOSParams.ets_badgeos_discord_nonce },
+				beforeSend: function () {
+					$(this).siblings("div.run-api-success").html("");
+					$(this).siblings('span.spinner').addClass("is-active").show();
+				},
+				success: function (data) {       
+					if (data.error) {
+						// handle the error
+						alert(data.error.msg);
+					} else {
+                                            
+						$(this).siblings("div.run-api-success").html("Update Discord Roles Sucesssfully !");
+					}
+				},
+				error: function (response, textStatus, errorThrown ) {
+					console.log( textStatus + " :  " + response.status + " : " + errorThrown );
+				},
+				complete: function () {
+					$(this).siblings('span.spinner').removeClass("is-active").hide();
+				}
+			});
+		});			
 		
-		}); // document reday
+	}); // document reday
 
 	} // Is Admin close
 
