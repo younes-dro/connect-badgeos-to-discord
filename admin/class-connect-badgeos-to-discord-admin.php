@@ -107,6 +107,11 @@ class Connect_Badgeos_To_Discord_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		global $pagenow;
+		if ( $pagenow === 'profile.php' || $pagenow === 'user-edit.php' ) {
+			$this->badgeos_discord_public_instance->enqueue_scripts();
+			return;
+		}
 		wp_register_script( $this->plugin_name . '-select2', plugin_dir_url( __FILE__ ) . 'js/select2.js', array( 'jquery' ), $this->version, false );
 
 		wp_register_script( $this->plugin_name . '-tabs-js', plugin_dir_url( __FILE__ ) . 'js/skeletabs.js', array( 'jquery' ), $this->version, false );
