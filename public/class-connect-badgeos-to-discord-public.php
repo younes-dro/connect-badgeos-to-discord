@@ -214,7 +214,7 @@ class Connect_Badgeos_To_Discord_Public {
 		wp_enqueue_style( $this->plugin_name );
 		wp_enqueue_script( $this->plugin_name );
 
-		return wp_kses( $restrictcontent_discord, ets_badgeos_discord_allowed_html() );
+		return $restrictcontent_discord;
 	}
 
 	/**
@@ -948,7 +948,7 @@ class Connect_Badgeos_To_Discord_Public {
 	public function ets_badgeos_discord_display_connect_discord_button( $user = null ) {
 
 		if ( is_user_logged_in() ) {
-			echo $this->ets_badgeos_discord_add_connect_discord_button();
+			_e( wp_kses( $this->ets_badgeos_discord_add_connect_discord_button(), ets_badgeos_discord_allowed_html() ) );
 		}
 
 	}
