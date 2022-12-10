@@ -221,6 +221,8 @@ class Connect_Badgeos_To_Discord_Public {
 	 * Allow data protocol.
 	 *
 	 * @since    1.0.0
+	 *
+	 * @param string[] $protocols Array of allowed protocols.
 	 * @return array
 	 */
 	public function ets_badgeos_discord_allow_data_protocol( $protocols ) {
@@ -573,6 +575,7 @@ class Connect_Badgeos_To_Discord_Public {
 	 * Discord DM a member using bot.
 	 *
 	 * @param INT       $user_id
+	 * @param STRING    $ranks_user
 	 * @param ARRAY|INT $rank_user (Array of ranks | achievement_id).
 	 * @param STRING    $type (warning|expired).
 	 * @param INT       $points Achievement points awarded.
@@ -855,8 +858,11 @@ class Connect_Badgeos_To_Discord_Public {
 	}
 
 	/**
+	 * Remove Rank's role.
 	 *
-	 * Remove Rank's role
+	 * @param INT $user_id
+	 * @param INT $rank_id
+	 * @param INT $entry_id
 	 */
 	public function ets_badgeos_discord_badgeos_after_revoke_rank( $user_id, $rank_id, $entry_id ) {
 
@@ -881,8 +887,12 @@ class Connect_Badgeos_To_Discord_Public {
 	/**
 	 * Send DM earned achievement.
 	 *
-	 * @param INT $user_id
-	 * @param INT $achievement_id
+	 * @param INT   $user_id
+	 * @param INT   $achievement_id
+	 * @param INT   $this_trigger
+	 * @param INT   $site_id
+	 * @param ARRAY $args
+	 * @param INT   $entry_id
 	 */
 	public function ets_badgeos_discord_badgeos_award_achievement( $user_id, $achievement_id, $this_trigger, $site_id, $args, $entry_id ) {
 
@@ -898,11 +908,20 @@ class Connect_Badgeos_To_Discord_Public {
 
 	}
 
-	/**
-	 *
-	 *
-	 */
-
+/**
+ * Sends discord mesage  when points are awarded.
+ *
+ * @param $user_id
+ * @param $credit_id
+ * @param $achievement_id
+ * @param $type
+ * @param $new_points
+ * @param $this_trigger
+ * @param $step_id
+ * @param $point_rec_id
+ *
+ * @return none
+ */
 	public function ets_badgeos_after_award_points( $user_id, $credit_id, $achievement_id, $type, $new_points, $this_trigger, $step_id, $point_rec_id ) {
 
 		if ( ! is_user_logged_in() ) {
