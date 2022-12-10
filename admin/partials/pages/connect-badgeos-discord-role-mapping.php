@@ -9,7 +9,7 @@ $connect_badgeos_default_role = sanitize_text_field( trim( get_option( 'ets_badg
 	<p><i class='fas fa-info'></i> <?php esc_html_e( 'Drag and Drop the Discord Roles over to the badgeos Ranks', 'connect-badgeos-to-discord' ); ?></p>
 </div>
 <div class="notice notice-warning ets-notice">
-  <p><i class='fas fa-info'></i> <?php echo __( 'Note: only published Ranks are displayed', 'connect-badgeos-to-discord' ); ?></p>
+  <p><i class='fas fa-info'></i> <?php esc_html_e( 'Note: only published Ranks are displayed', 'connect-badgeos-to-discord' ); ?></p>
 </div>
 
 <div class="row-container">
