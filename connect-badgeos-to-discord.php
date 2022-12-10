@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Connect BadgeOS to Discord
  * Plugin URI:        https://www.expresstechsoftwares.com/connect-badgeos-to-discord
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Create a community of your users by connecting your BadgeOS Website to your Discord server.
  * Version:           1.0.0
  * Author:            ExpressTech Softwares Solutions Pvt Ltd
  * Author URI:        https://www.expresstechsoftwares.com
