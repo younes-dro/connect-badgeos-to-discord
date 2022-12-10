@@ -844,12 +844,6 @@ class Connect_Badgeos_To_Discord_Public {
 	 */
 	public function ets_badgeos_discord_badgeos_after_award_rank( $user_id, $rank_id, $rank_type, $credit_id, $credit_amount, $admin_id, $this_trigger, $rank_entry_id = 0 ) {
 
-		// update_option( 'badgeos_rank_awarded_user_id_' . time (), $user_id );
-		// update_option( 'badgeos_rank_awarded_rank_id_' . time (), $rank_id );
-		// update_option( 'badgeos_rank_awarded_rank_type' . time (), $rank_type );
-
-		// return;
-
 		$ets_badgeos_discord_send_award_rank_dm = sanitize_text_field( trim( get_option( 'ets_badgeos_discord_send_award_rank_dm' ) ) );
 		$access_token                           = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_access_token', true ) ) );
 		// $refresh_token         = sanitize_text_field( trim( get_user_meta( $user_id, '_ets_badgeos_discord_refresh_token', true ) ) );
@@ -910,14 +904,6 @@ class Connect_Badgeos_To_Discord_Public {
 	 */
 
 	public function ets_badgeos_after_award_points( $user_id, $credit_id, $achievement_id, $type, $new_points, $this_trigger, $step_id, $point_rec_id ) {
-
-		/*
-			  update_option( 'badgeos_point_awarded_user_id_' . time(), $user_id );
-		update_option( 'badgeos_point_awarded_achievement_id_' . time(), $achievement_id );
-		update_option( 'badgeos_point_awarded_new_points_' . time(), $new_points );
-		update_option( 'badgeos_point_awarded_step_id_' . time(), $step_id );
-		update_option( 'badgeos_point_awarded_point_rec_id_' . time(), $point_rec_id );
-		update_option( 'badgeos_point_awarded_credit_id_' . time(), $credit_id ); */
 
 		if ( ! is_user_logged_in() ) {
 			wp_send_json_error( 'Unauthorized user', 401 );
