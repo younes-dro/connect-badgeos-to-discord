@@ -502,7 +502,7 @@ class Connect_Badgeos_To_Discord_Admin {
 		$ets_badgeos_discord_disconnect_button_bg_color = isset( $_POST['ets_badgeos_discord_disconnect_button_bg_color'] ) && $_POST['ets_badgeos_discord_disconnect_button_bg_color'] != '' ? sanitize_text_field( trim( $_POST['ets_badgeos_discord_disconnect_button_bg_color'] ) ) : '#ff0000';
 		$ets_badgeos_loggedin_btn_text                  = isset( $_POST['ets_badgeos_loggedin_btn_text'] ) && $_POST['ets_badgeos_loggedin_btn_text'] != '' ? sanitize_text_field( trim( $_POST['ets_badgeos_loggedin_btn_text'] ) ) : 'Connect To Discord';
 		$ets_badgeos_loggedout_btn_text                 = isset( $_POST['ets_badgeos_loggedout_btn_text'] ) && $_POST['ets_badgeos_loggedout_btn_text'] != '' ? sanitize_text_field( trim( $_POST['ets_badgeos_loggedout_btn_text'] ) ) : 'Login With Discord';
-		$ets_badgeos_discord_disconnect_btn_text        = $_POST['ets_badgeos_discord_disconnect_btn_text'] ? sanitize_text_field( trim( $_POST['ets_badgeos_discord_disconnect_btn_text'] ) ) : 'Disconnect From Discord';
+		$ets_badgeos_discord_disconnect_btn_text        = isset( $_POST['ets_badgeos_discord_disconnect_btn_text'] ) ? sanitize_text_field( trim( $_POST['ets_badgeos_discord_disconnect_btn_text'] ) ) : 'Disconnect From Discord';
 
 		if ( isset( $_POST['appearance_submit'] ) ) {
 
