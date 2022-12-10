@@ -44,6 +44,14 @@ if ( isset( $_GET['save_settings_msg'] ) ) {
 				<button class="skltbs-tab" data-identity="logs" ><?php esc_html_e( 'Logs', 'connect-badgeos-to-discord' ); ?>	
 				</button>
 				</li>
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="documentation" ><?php esc_html_e( 'Documentation', 'connect-badgeos-to-discord' ); ?>	
+				</button>
+				</li> 
+				<li class="skltbs-tab-item">
+				<button class="skltbs-tab" data-identity="support" ><?php esc_html_e( 'Support', 'connect-badgeos-to-discord' ); ?>	
+				</button>
+				</li>								
 			</ul>
 			<div class="skltbs-panel-group">
 				<div id="ets_badgeos_application_details" class="badgeos-discord-tab-conetent skltbs-panel">
@@ -62,7 +70,13 @@ if ( isset( $_GET['save_settings_msg'] ) ) {
 				</div>                            
 				<div id='ets_badgeos_discord_logs' class="badgeos-discord-tab-conetent skltbs-panel">
 				<?php require_once CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-badgeos-discord-error-log.php'; ?>
-				</div>                            
+				</div>   
+				<div id='ets_badgeos_discord_documentation' class="badgeos-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-badgeos-discord-documentation.php'; ?>
+				</div>
+				<div id='ets_badgeos_discord_support' class="badgeos-discord-tab-conetent skltbs-panel">
+				<?php require_once CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/pages/connect-badgeos-discord-support.php'; ?>
+				</div>								                         
 			</div>  
 		</div>
 
