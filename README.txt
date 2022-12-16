@@ -31,6 +31,11 @@ Connect BadgeOS to Discord Plugin Features:
 
 7) Send custom message when a user loses points.
 
+8) Force logout of a user from the users list.
+
+= Important Links =
+* [Github →](https://github.com/expresstechsoftware/connect-badgeos-to-discord)
+
 == Installation ==
 
 = Download, Install and Activate! =
