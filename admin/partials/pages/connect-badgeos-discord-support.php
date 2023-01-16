@@ -11,7 +11,7 @@ if ( $currentUser ) {
 		<input type="hidden" name="current_url" value="<?php echo esc_url( ets_badgeos_discord_get_current_screen_url() ); ?>">
 	  <div class="ets-container">
 		<div class="top-logo-title">
-		  <img src="<?php echo esc_attr( CONNECT_BADGEOS_TO_DISCORD_API_URL . 'admin/images/ets-logo.png' ); ?>" class="img-fluid company-logo" alt="">
+		  <img src="<?php echo esc_attr( CONNECT_BADGEOS_TO_DISCORD_PLUGIN_URL . 'admin/images/ets-logo.png' ); ?>" class="img-fluid company-logo" alt="">
 		  <h1><?php esc_html_e( 'ExpressTech Softwares Solutions Pvt. Ltd.', 'connect-badgeos-to-discord' ); ?></h1>
 		  <p><?php esc_html_e( 'ExpressTech Software Solution Pvt. Ltd. is the leading Enterprise WordPress development company.', 'connect-badgeos-to-discord' ); ?><br>
 		  <?php esc_html_e( 'Contact us for any WordPress Related development projects.', 'connect-badgeos-to-discord' ); ?></p>

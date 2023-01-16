@@ -16,7 +16,7 @@
  * Plugin Name:       Connect BadgeOS to Discord
  * Plugin URI:        https://www.expresstechsoftwares.com/connect-badgeos-to-discord
  * Description:       Create a community of your users by connecting your BadgeOS Website to your Discord server.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            ExpressTech Softwares Solutions Pvt Ltd
  * Author URI:        https://www.expresstechsoftwares.com
  * License:           GPL-2.0+
@@ -35,12 +35,17 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'CONNECT_BADGEOS_TO_DISCORD_VERSION', '1.0.0' );
+define( 'CONNECT_BADGEOS_TO_DISCORD_VERSION', '1.0.1' );
 
 /**
  * Define plugin directory path
  */
 define( 'CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Define plugin url
+ */
+define( 'CONNECT_BADGEOS_TO_DISCORD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Discord API call scopes

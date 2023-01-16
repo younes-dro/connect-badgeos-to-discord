@@ -43,6 +43,10 @@
 			success: function (response) {
 				if (response != null && response.hasOwnProperty('code') && response.code == 50001 && response.message == 'Missing Access') {
 					$(".badgeos-btn-connect-to-bot").show();
+				} else if ( response.code === 10004 && response.message == 'Unknown Guild' ) {
+					$(".badgeos-btn-connect-to-bot").show().after('<p><b>The server ID is wrong or you did not connect the Bot.</b></p>');
+				}else if( response.code === 0 && response.message == '401: Unauthorized' ) {
+					$(".badgeos-btn-connect-to-bot").show().html("Error: Unauthorized - The Bot Token is wrong").addClass('error-bk');						
 				} else if (response == null || response.message == '401: Unauthorized' || response.hasOwnProperty('code') || response == 0) {
 					$("#badgeos-connect-discord-bot").show().html("Error: Please check all details are correct").addClass('error-bk');
 				} else {
