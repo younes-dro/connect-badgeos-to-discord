@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       Connect BadgeOS to Discord
  * Plugin URI:        https://www.expresstechsoftwares.com/connect-badgeos-to-discord
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
- * Version:           1.0.0
+ * Description:       Create a community of your users by connecting your BadgeOS Website to your Discord server.
+ * Version:           1.0.1
  * Author:            ExpressTech Softwares Solutions Pvt Ltd
  * Author URI:        https://www.expresstechsoftwares.com
  * License:           GPL-2.0+
@@ -35,7 +35,47 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'CONNECT_BADGEOS_TO_DISCORD_VERSION', '1.0.0' );
+define( 'CONNECT_BADGEOS_TO_DISCORD_VERSION', '1.0.1' );
+
+/**
+ * Define plugin directory path
+ */
+define( 'CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
+/**
+ * Define plugin url
+ */
+define( 'CONNECT_BADGEOS_TO_DISCORD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * Discord API call scopes
+ */
+define( 'CONNECT_BADGEOS_TO_DISCORD_OAUTH_SCOPES', 'identify email guilds guilds.join' );
+
+/**
+ * Discord API url.
+ */
+define( 'CONNECT_BADGEOS_TO_DISCORD_API_URL', 'https://discord.com/api/v10/' );
+
+/**
+ * Define group name for action scheduler actions
+ */
+define( 'BADGEOS_DISCORD_AS_GROUP_NAME', 'ets-badgeos-discord' );
+
+/**
+ * Discord BOT Permissions
+ */
+define( 'BADGEOS_DISCORD_BOT_PERMISSIONS', 8 );
+
+/**
+ * Follwing response codes not cosider for re-try API calls.
+ */
+define( 'BADGEOS_DISCORD_DONOT_RETRY_THESE_API_CODES', array( 0, 10003, 50033, 10004, 50025, 10013, 10011 ) );
+
+/**
+ * Define plugin directory url
+ */
+define( 'BADGEOS_DISCORD_DONOT_RETRY_HTTP_CODES', array( 400, 401, 403, 404, 405, 502 ) );
 
 /**
  * The code that runs during plugin activation.
