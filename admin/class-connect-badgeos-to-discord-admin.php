@@ -159,6 +159,34 @@ class Connect_Badgeos_To_Discord_Admin {
 		require_once CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH . 'admin/partials/connect-badgeos-to-discord-admin-display.php';
 	}
 
+	/*
+	Catch the Connect to Bot action from admin.
+	*/
+	public function ets_badgeos_discord_action_connect_bot() {
+
+		if ( isset( $_GET['action'] ) && $_GET['action'] == 'badgeos-discord-connect-to-bot' ) {
+			if ( ! current_user_can( 'administrator' ) ) {
+				wp_send_json_error( 'You do not have sufficient rights', 403 );
+				exit();
+			}
+
+			$discord_authorise_api_url = CONNECT_BADGEOS_TO_DISCORD_API_URL . 'oauth2/authorize';
+			$params                    = array(
+				'client_id'            => sanitize_text_field( trim( get_option( 'ets_badgeos_discord_client_id' ) ) ),
+				'permissions'          => BADGEOS_DISCORD_BOT_PERMISSIONS,
+				'scope'                => 'bot',
+				'guild_id'             => sanitize_text_field( trim( get_option( 'ets_badgeos_discord_server_id' ) ) ),
+				'disable_guild_select' => 'true',
+				'redirect_uri'         => sanitize_text_field( trim( get_option( 'ets_badgeos_discord_admin_redirect_url' ) ) ),
+				'response_type'        => 'code',
+			);
+
+			$discord_authorise_api_url = CONNECT_BADGEOS_TO_DISCORD_API_URL . 'oauth2/authorize?' . http_build_query( $params );
+			wp_redirect( $discord_authorise_api_url, 302, get_site_url() );
+			exit;
+		}
+	}
+
 	/**
 	 * Save application details
 	 *

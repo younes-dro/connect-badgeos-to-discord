@@ -43,6 +43,11 @@ define( 'CONNECT_BADGEOS_TO_DISCORD_VERSION', '1.0.0' );
 define( 'CONNECT_BADGEOS_TO_DISCORD_PLUGIN_DIR_PATH', plugin_dir_path( __FILE__ ) );
 
 /**
+ * Define plugin url
+ */
+define( 'CONNECT_BADGEOS_TO_DISCORD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+
+/**
  * Discord API call scopes
  */
 define( 'CONNECT_BADGEOS_TO_DISCORD_OAUTH_SCOPES', 'identify email guilds guilds.join' );

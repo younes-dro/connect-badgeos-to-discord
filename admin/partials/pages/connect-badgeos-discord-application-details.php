@@ -26,7 +26,7 @@ $ets_badgeos_discord_redirect_page_id   = sanitize_text_field( trim( get_option(
 	<label><?php esc_html_e( 'Redirect URL', 'connect-badgeos-to-discord' ); ?> :</label>
 
 	<p class="redirect-url"><b><?php echo esc_url( $ets_badgeos_discord_redirect_url ); ?></b></p>
-		<select class= "ets-input ets_badgeos_discord_redirect_url" id="ets_badgeos_discord_redirect_url" name="ets_badgeos_discord_redirect_url" style="max-width: 100%" required>
+		<select class= "ets-input ets_badgeos_discord_redirect_url" id="ets_badgeos_discord_redirect_url" name="ets_badgeos_discord_redirect_url" style="width: 100%" required>
 		<?php _e( ets_badgeos_discord_pages_list( wp_kses( $ets_badgeos_discord_redirect_page_id, array( 'option' => array( 'data-page-url' => array() ) ) ) ) ); ?>
 		</select>                
 				
