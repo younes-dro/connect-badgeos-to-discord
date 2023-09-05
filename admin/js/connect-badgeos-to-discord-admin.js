@@ -351,6 +351,32 @@
 		});			
 		
 	}); // document reday
+	$(document).ready(function(){
+		$(' .ets-badgeos-discord-review-notice > button.notice-dismiss' ).on('click', function() {
+
+			$.ajax({
+				type: "POST",
+				dataType: "JSON",
+				url: etsBadgeOSParams.admin_ajax,
+				data: { 
+					'action': 'ets_badgeos_discord_notice_dismiss', 
+					'ets_badgeos_discord_nonce': etsBadgeOSParams.ets_badgeos_discord_nonce,
+				},
+				beforeSend: function () {
+					console.log('sending...');
+				},
+				success: function (response) {
+					console.log(response);
+				},
+				error: function (response) {
+					console.error(response);
+				},
+				complete: function () {
+					// 
+				}
+			});
+		});
+	});
 
 	} // Is Admin close
 

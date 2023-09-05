@@ -140,6 +140,8 @@ class Connect_Badgeos_To_Discord {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-connect-badgeos-to-discord-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-connect-badgeos-to-discord-admin-notices.php';
+
 		$this->loader = new Connect_Badgeos_To_Discord_Loader();
 
 	}
@@ -186,6 +188,7 @@ class Connect_Badgeos_To_Discord {
 		$this->loader->add_filter( 'manage_users_custom_column', $plugin_admin, 'ets_badgeos_discord_run_badgeos_discord_api', 99, 3 );
 		$this->loader->add_action( 'wp_ajax_ets_badgeos_discord_run_api', $plugin_admin, 'ets_badgeos_discord_run_api' );
 		$this->loader->add_action( 'admin_post_badgeos_discord_send_support_mail', $plugin_admin, 'ets_badgeos_discord_send_support_mail' );
+		$this->loader->add_action( 'wp_ajax_ets_badgeos_discord_notice_dismiss', $plugin_admin, 'ets_badgeos_discord_notice_dismiss' );
 
 	}
 
