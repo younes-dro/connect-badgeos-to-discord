@@ -718,4 +718,31 @@ class Connect_Badgeos_To_Discord_Admin {
 		}
 	}
 
+	/**
+	 *
+	 * Update user meta notification
+	 */
+	public function ets_badgeos_discord_notice_dismiss() {
+
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( 'Unauthorized user', 401 );
+			exit();
+		}
+
+		// Check for nonce security
+		if ( ! wp_verify_nonce( $_POST['ets_badgeos_discord_nonce'], 'ets-badgeos-discord-ajax-nonce' ) ) {
+				wp_send_json_error( 'You do not have sufficient rights', 403 );
+				exit();
+		}
+
+		update_user_meta( get_current_user_id(), '_ets_badgeos_discord_dismissed_notification', true );
+		$event_res = array(
+			'status'  => 1,
+			'message' => __( 'success', 'connect-badgeos-to-discord' ),
+		);
+		return wp_send_json( $event_res );
+
+		exit();
+	}
+
 }
